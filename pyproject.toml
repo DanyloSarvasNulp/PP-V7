@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "venv"
+name = "app"
 version = "0.1.0"
 description = ""
 authors = ["Maksym1os <maksym.los.knm.2020.@edu.lpnu.ua>"]
