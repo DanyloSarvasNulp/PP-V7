@@ -1,4 +1,4 @@
-
+from sqlalchemy import orm
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -26,15 +26,6 @@ class user(BaseModel):
     userStatus = Column(Boolean)
 
 
-
-class access(BaseModel):
-    __tablename__ = "access"
-    auditorium_id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, primary_key=True)
-    start = Column(DateTime)
-    end = Column(DateTime)
-    querry_id = Column(Integer, primary_key=True)
-
 class querry(BaseModel):
     __tablename__ = "querry"
 
@@ -47,3 +38,11 @@ class auditorium(BaseModel):
 
     id = Column(Integer, primary_key=True)
     is_free = Column(Boolean)
+
+class access(BaseModel):
+    __tablename__ = "access"
+    auditorium_id = Column(Integer, ForeignKey(auditorium.id))
+    user_id = Column(Integer, ForeignKey(user.id))
+    start = Column(DateTime)
+    end = Column(DateTime)
+    querry_id = Column(Integer, ForeignKey(querry.id))
