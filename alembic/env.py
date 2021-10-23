@@ -30,11 +30,6 @@ target_metadata = BaseModel.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
-# config.set_main_option(
-#     "sqlalchemy.url",
-#     "mysql+pymysql://root:45627349350923@127.0.0.1/Swagger_booking"
-# )
-
 config.set_main_option(
     "sqlalchemy.url",
     "mysql+pymysql://root:45627349350923@127.0.0.1/Swagger_booking"

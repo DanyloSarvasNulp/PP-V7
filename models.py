@@ -1,8 +1,7 @@
-from sqlalchemy import orm
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy import Column, Integer, ForeignKey, String, BigInteger, DateTime, BINARY, Boolean, func
+from sqlalchemy import Column, Integer, ForeignKey, VARCHAR, DateTime, Boolean
 
 engine = create_engine('mysql+pymysql://root:45627349350923@127.0.0.1/Swagger_booking')
 engine.connect()
@@ -13,16 +12,17 @@ Session = scoped_session(SessionFactory)
 
 BaseModel = declarative_base()
 
+
 class user(BaseModel):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
-    username = Column(String)
-    firstName = Column(String)
-    lastName = Column(String)
-    email = Column(String)
-    password = Column(String)
-    phone = Column(String)
+    username = Column(VARCHAR(45))
+    firstName = Column(VARCHAR(45))
+    lastName = Column(VARCHAR(45))
+    email = Column(VARCHAR(45))
+    password = Column(VARCHAR(45))
+    phone = Column(VARCHAR(15))
     userStatus = Column(Boolean)
 
 
@@ -38,6 +38,7 @@ class auditorium(BaseModel):
 
     id = Column(Integer, primary_key=True)
     is_free = Column(Boolean)
+
 
 class access(BaseModel):
     __tablename__ = "access"

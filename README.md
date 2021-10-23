@@ -7,9 +7,17 @@ Provided you have pyenv and poetry on your pc do the following:
 >>> poetry shell
 3. install dependencies by command
 >>> poetry install
-3. type 
+
+lab-4
+
+1. type 
 >>> waitress-serve --port=8000 app:app
-4. in web-browser write URL: 
+2. in web-browser write URL: 
 >>> http://127.0.0.1:8000/api/v1/hello-world-7
-5. to end process type:
->>> ctrl + c
+
+lab-6
+
+1. create revision
+>>> alembic revision -m "add models" --autogenerate
+2. upgrade head
+>>> alembic upgrade head
