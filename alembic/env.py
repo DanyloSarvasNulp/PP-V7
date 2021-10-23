@@ -5,6 +5,11 @@ from sqlalchemy import pool
 
 from alembic import context
 
+
+from models import BaseModel
+
+import sys
+sys.path.append(r"C:\Users\ded\PycharmProjects\labs")
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -18,6 +23,12 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = None
+
+
+config.set_main_option(
+    "sqlalchemy.url",
+    "mysql+pymysql://root:45627349350923@127.0.0.1/Swagger_booking"
+)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

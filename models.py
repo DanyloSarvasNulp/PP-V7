@@ -7,6 +7,9 @@ from sqlalchemy import Column, Integer, ForeignKey, String, BigInteger, DateTime
 engine = create_engine('mysql+pymysql://root:45627349350923@127.0.0.1/Swagger_booking')
 engine.connect()
 
+SessionFactory = sessionmaker(bind=engine)
+
+Session = scoped_session(SessionFactory)
 
 BaseModel = declarative_base()
 
