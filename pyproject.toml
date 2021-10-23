@@ -5,7 +5,9 @@ description = ""
 authors = ["Maksym1os <maksym.los.knm.2020.@edu.lpnu.ua>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.7"
+Flask = "^2.0.2"
+waitress = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
 
