@@ -41,6 +41,7 @@ class auditorium(BaseModel):
 
 class access(BaseModel):
     __tablename__ = "access"
+    id = Column(Integer, primary_key=True)
     auditorium_id = Column(Integer, ForeignKey(auditorium.id))
     user_id = Column(Integer, ForeignKey(user.id))
     start = Column(DateTime)
