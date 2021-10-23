@@ -1,93 +1,63 @@
----
 openapi: 3.0.0
 info:
-  title: Auditorium Reserve
   version: 1.0.0
-externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
+
+  title: Auditorium Reserve
 servers:
-- url: https://virtserver.swaggerhub.com/NULP_Leshchuk/lab_5_1/1.0.0
-  description: SwaggerHub API Auto Mocking
-- url: https://petstore.swagger.io/v2
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/NULP_Leshchuk/lab_5_1/1.0.0
+  - url: 'https://petstore.swagger.io/v2'
 paths:
+  
   /user:
     post:
       tags:
-      - user
+        - user
       summary: Create user
       description: This can only be done by the logged in user.
       operationId: createUser
+      responses:
+        default:
+          description: successful operation
+        '500':
+          description: failed
       requestBody:
-        description: Created user object
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+        description: Created user object
         required: true
-      responses:
-        default:
-          description: successful operation
-  /user/createWithArray:
-    post:
-      tags:
-      - user
-      summary: Creates list of users with given input array
-      operationId: createUsersWithArrayInput
-      requestBody:
-        $ref: '#/components/requestBodies/UserArray'
-      responses:
-        default:
-          description: successful operation
-  /user/createWithList:
-    post:
-      tags:
-      - user
-      summary: Creates list of users with given input array
-      operationId: createUsersWithListInput
-      requestBody:
-        $ref: '#/components/requestBodies/UserArray'
-      responses:
-        default:
-          description: successful operation
   /user/login:
     get:
       tags:
-      - user
+        - user
       summary: Logs user into the system
       operationId: loginUser
       parameters:
-      - name: username
-        in: query
-        description: The user name for login
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: password
-        in: query
-        description: The password for login in clear text
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: username
+          in: query
+          description: The user name for login
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
+        '200':
           description: successful operation
           headers:
             X-Rate-Limit:
               description: calls per hour allowed by the user
-              style: simple
-              explode: false
               schema:
                 type: integer
                 format: int32
             X-Expires-After:
               description: date in UTC when token expires
-              style: simple
-              explode: false
               schema:
                 type: string
                 format: date-time
@@ -98,318 +68,168 @@ paths:
             application/xml:
               schema:
                 type: string
-        "400":
+        '400':
           description: Invalid username/password supplied
   /user/logout:
     get:
       tags:
-      - user
+        - user
       summary: Logs out current logged in user session
       operationId: logoutUser
       responses:
         default:
           description: successful operation
-  /user/{username}:
-    get:
-      tags:
-      - user
-      summary: Get user by user name
-      operationId: getUserByName
-      parameters:
-      - name: username
-        in: path
-        description: The name that needs to be fetched. Use user1 for testing.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-        "400":
-          description: Invalid username supplied
-        "404":
-          description: User not found
+  
     put:
       tags:
-      - user
+        - user
       summary: Updated user
       description: This can only be done by the logged in user.
       operationId: updateUser
-      parameters:
-      - name: username
-        in: path
-        description: name that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: User not found
       requestBody:
-        description: Updated user object
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+        description: Updated user
         required: true
+  '/user/{username}':
+    get:
+      tags:
+        - user
+      summary: Get user by user name
+      operationId: getUserByName
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be fetched. Use user1 for testing.
+          required: true
+          schema:
+            type: string
       responses:
-        "400":
-          description: Invalid user supplied
-        "404":
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid username supplied
+        '404':
           description: User not found
     delete:
       tags:
-      - user
+        - user
       summary: Delete user
       description: This can only be done by the logged in user.
       operationId: deleteUser
       parameters:
-      - name: username
-        in: path
-        description: The name that needs to be deleted
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: username
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        "400":
+        '200':
+          description: Success
+        '400':
           description: Invalid username supplied
-        "404":
+        '404':
           description: User not found
+  
   /auditorium:
-    get:
-      tags:
-      - auditorium
-      summary: Output contents
-      description: Return all contents
-      operationId: output_auditorium
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Auditorium'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Auditorium'
-        "405":
-          description: Not allowed
     post:
       tags:
-      - auditorium
+        - auditorium
       summary: Create new auditorium
       operationId: createAuditorium
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Success
       requestBody:
-        description: Created new auditorium
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Auditorium'
+        description: Created new auditorium
         required: true
-      responses:
-        "200":
-          description: OK
-        "201":
-          description: Success
-  /auditorium/{id}:
     get:
-      tags:
-      - auditorium
-      summary: Find account by ID
-      description: Returns a single account
-      operationId: getAccountById
-      parameters:
-      - name: id
-        in: path
-        description: ID of account to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: successful operation
+      tags: 
+        - auditorium
+      summary: Output contents
+      description: Return all contents
+      operationId: output_auditorium
+      responses: 
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Auditorium'
+                $ref: "#/components/schemas/Auditorium"
             application/xml:
               schema:
-                $ref: '#/components/schemas/Auditorium'
-        "400":
-          description: Invalid ID supplied
-        "404":
-          description: Account not found
-        "405":
-          description: Not allowed
-      security:
-      - api_key: []
+                $ref: "#/components/schemas/Auditorium"
+        '405':
+          description: Not allowed 
+    
+  '/auditorium/{id}':
     put:
       tags:
-      - auditorium
+        - auditorium
       summary: Updated auditorium
       description: This can only be done by the logged in user.
       operationId: updateAuditorium
       parameters:
-      - name: id
-        in: path
-        description: id that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
+        - name: id
+          in: path
+          description: id that need to be updated
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid id supplied
+        '404':
+          description: Auditorium not found
       requestBody:
-        description: Updated user object
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Auditorium'
-        required: true
-      responses:
-        "400":
-          description: Invalid id supplied
-        "404":
-          description: Auditorium not found
-    delete:
-      tags:
-      - auditorium
-      summary: Delete auditorium
-      description: This can only be done by the logged user.
-      operationId: deleteAuditorium
-      parameters:
-      - name: id
-        in: path
-        description: The name that needs to be deleted
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      responses:
-        "200":
-          description: Success
-        "400":
-          description: Invalid username supplied
-        "404":
-          description: User not found
-  /access:
-    post:
-      tags:
-      - access
-      summary: Create new auditorium
-      operationId: createRequest
-      requestBody:
-        description: Created new auditorium
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Access'
-        required: true
-      responses:
-        default:
-          description: successful operation
-  /access/{user/id},{auditorium/id}:
-    put:
-      tags:
-      - access
-      summary: Updated auditorium
-      description: This can only be done by the logged in user.
-      operationId: updateAccess
-      parameters:
-      - name: user/id
-        in: path
-        description: id that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: auditorium/id
-        in: path
-        description: id that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      requestBody:
         description: Updated user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Access'
         required: true
-      responses:
-        "400":
-          description: Invalid id supplied
-        "404":
-          description: Auditorium not found
-    delete:
-      tags:
-      - access
-      summary: Delete auditorium
-      description: This can only be done by the logged user.
-      operationId: deleteAccess
-      parameters:
-      - name: user/id
-        in: path
-        description: id that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      - name: auditorium/id
-        in: path
-        description: id that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      responses:
-        "400":
-          description: Invalid username supplied
-        "404":
-          description: User not found
-  /querry:
-    post:
-      tags:
-      - queue
-      summary: Create new auditorium
-      operationId: createQueue
-      requestBody:
-        description: Created new auditorium
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Querry'
-        required: true
-      responses:
-        "200":
-          description: OK
-        "201":
-          description: Success
-  /querry/values:
+    
     get:
       tags:
-      - queue
-      operationId: getQueue
+        - auditorium
+      summary: Find account by ID
+      description: Returns a single account
+      operationId: getAccountById
+      parameters:
+        - name: id
+          in: path
+          description: ID of account to return
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/json:
@@ -418,8 +238,160 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/Auditorium'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Account not found
+        '405':
+          description: Not allowed
       security:
-      - api_key: []
+        - api_key: []
+    
+    delete:
+      tags:
+        - auditorium
+      summary: Delete auditorium
+      description: This can only be done by the logged user.
+      operationId: deleteAuditorium
+      parameters:
+        - name: id
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+        
+        
+  /access:
+    post:
+      tags:
+        - access
+      summary: Create new auditorium
+      operationId: createRequest
+      responses:
+        '200':
+          description: Success
+        default:
+          description: successful operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Access'
+        description: Created new auditorium
+        required: true
+    
+  '/access/{user/id},{auditorium/id}':
+    put:
+      tags:
+        - access
+      summary: Updated auditorium
+      description: This can only be done by the logged in user.
+      operationId: updateAccess
+      parameters:
+        - name: user/id
+          in: path
+          description: id that need to be updated
+          required: true
+          schema:
+            type: string
+        - name: auditorium/id
+          in: path
+          description: id that need to be updated
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid id supplied
+        '404':
+          description: Auditorium not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Access'
+        description: Updated user object
+        required: true
+    
+    delete:
+      tags:
+        - access
+      summary: Delete auditorium
+      description: This can only be done by the logged user.
+      operationId: deleteAccess
+      parameters:
+        - name: user/id
+          in: path
+          description: id that need to be updated
+          required: true
+          schema:
+            type: integer
+        - name: auditorium/id
+          in: path
+          description: id that need to be updated
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+          
+  /querry:
+    post:
+      tags:
+        - queue
+      summary: Create new auditorium
+      operationId: createQueue
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Success
+      
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Querry'
+        description: Created new auditorium
+        required: true        
+          
+          
+  /querry/values:
+    get:
+      tags:
+        - queue
+      operationId: getQueue
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Auditorium"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Auditorium"
+      security:
+        - api_key: []
+  
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
 components:
   schemas:
     User:
@@ -442,35 +414,43 @@ components:
           type: string
         userStatus:
           type: integer
-          description: User Status
           format: int32
+          description: User Status
       xml:
         name: User
+    
     Auditorium:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        is_free:
-          type: boolean
+     type: object
+     properties:
+       id: 
+        type: integer
+        format: int64
+       is_free :
+        type: boolean
+    
     Querry:
-      type: object
-      properties:
+     type: object
+     properties:
         access:
-          $ref: '#/components/schemas/Access'
+          $ref: "#/components/schemas/Access"
         place:
           type: integer
           format: int64
+        
     Access:
       type: object
       properties:
         user:
-          $ref: '#/components/schemas/User/properties/id'
+          $ref: "#/components/schemas/User/properties/id"
         auditorium:
-          $ref: '#/components/schemas/Auditorium/properties/id'
+          $ref: "#/components/schemas/Auditorium/properties/id"
+        start:
+          type: string
+        end:
+          type: string
       xml:
         name: Access
+    
     ApiResponse:
       type: object
       properties:
@@ -483,15 +463,16 @@ components:
           type: string
   requestBodies:
     UserArray:
-      description: List of user object
       content:
         application/json:
           schema:
             type: array
             items:
               $ref: '#/components/schemas/User'
+      description: List of user object
       required: true
   securitySchemes:
+    
     api_key:
       type: apiKey
       name: api_key
