@@ -8,6 +8,8 @@ authors = ["DanyloSarvasNulp <91377012+DanyloSarvasNulp@users.noreply.github.com
 python = "^3.7"
 Flask = "^2.0.2"
 waitress = "^2.0.0"
+alembic = "^1.7.4"
+SQLAlchemy = "^1.4.26"
 
 [tool.poetry.dev-dependencies]
 
