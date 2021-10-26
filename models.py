@@ -25,6 +25,14 @@ class user(BaseModel):
     phone = Column(VARCHAR(15))
     userStatus = Column(Boolean)
 
+    def __str__(self):
+        return f"User ID    : {self.id}\n" \
+               f"Username      : {self.username}\n" \
+               f"Email      : {self.email}\n" \
+               f"phone      : {self.phone}\n"
+
+
+
 
 class querry(BaseModel):
     __tablename__ = "querry"
@@ -48,3 +56,8 @@ class access(BaseModel):
     start = Column(DateTime)
     end = Column(DateTime)
     querry_id = Column(Integer, ForeignKey(querry.id))
+
+
+BaseModel.metadata.create_all(engine)
+
+
