@@ -32,8 +32,6 @@ class user(BaseModel):
                f"phone      : {self.phone}\n"
 
 
-
-
 class querry(BaseModel):
     __tablename__ = "querry"
 
