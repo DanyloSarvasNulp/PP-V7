@@ -1,4 +1,4 @@
-from models import Session, user, access, querry, auditorium
+from models import Session, user, access, auditorium
 
 
 user1 = user(username="pusyBOY",email="customemail@gmail.com", phone="0935215742")

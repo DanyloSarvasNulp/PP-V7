@@ -45,7 +45,6 @@ class access(BaseModel):
     user_id = Column(Integer, ForeignKey(user.id))
     start = Column(DateTime)
     end = Column(DateTime)
-    querry_id = Column(Integer, ForeignKey(querry.id))
 
 
 BaseModel.metadata.create_all(engine)
