@@ -16,8 +16,8 @@ lab-4
 >>> http://127.0.0.1:8000/api/v1/hello-world-7
 
 lab-6
-
 1. create revision
+>>> alembic stamp head
 >>> alembic revision -m "add models" --autogenerate
 2. upgrade head
 >>> alembic upgrade head

@@ -8,7 +8,6 @@ user3 = user(username="Khodack",email="nikeriss@gmail.com", phone="0163715556")
 auditorium1 = auditorium(is_free=True)
 auditorium2 = auditorium(is_free=True)
 
-
 querry1 = querry(place=4)
 querry2 = querry(place=10)
 
