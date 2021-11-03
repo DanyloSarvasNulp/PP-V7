@@ -349,45 +349,6 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
-          
-  /querry:
-    post:
-      tags:
-        - queue
-      summary: Create new auditorium
-      operationId: createQueue
-      responses:
-        '200':
-          description: OK
-        '201':
-          description: Success
-      
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Querry'
-        description: Created new auditorium
-        required: true        
-          
-          
-  /querry/values:
-    get:
-      tags:
-        - queue
-      operationId: getQueue
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Auditorium"
-            application/xml:
-              schema:
-                $ref: "#/components/schemas/Auditorium"
-      security:
-        - api_key: []
   
 externalDocs:
   description: Find out more about Swagger
