@@ -32,7 +32,7 @@ target_metadata = BaseModel.metadata
 
 config.set_main_option(
     "sqlalchemy.url",
-    "mysql+pymysql://root:45627349350923@127.0.0.1/Swagger_booking"
+    "mysql+pymysql://root:22121356@127.0.0.1/swagger_booking"
 )
 
 

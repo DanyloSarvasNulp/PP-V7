@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import Column, Integer, ForeignKey, VARCHAR, DateTime, Boolean
 
-engine = create_engine('mysql+pymysql://root:45627349350923@127.0.0.1/Swagger_booking')
+engine = create_engine('mysql+pymysql://root:22121356@127.0.0.1/swagger_booking')
 engine.connect()
 
 SessionFactory = sessionmaker(bind=engine)
@@ -30,14 +30,6 @@ class user(BaseModel):
                f"Username      : {self.username}\n" \
                f"Email      : {self.email}\n" \
                f"phone      : {self.phone}\n"
-
-
-class querry(BaseModel):
-    __tablename__ = "querry"
-
-    id = Column(Integer, primary_key=True)
-    place = Column(Integer)
-
 
 class auditorium(BaseModel):
     __tablename__ = "auditorium"
