@@ -31,14 +31,6 @@ class user(BaseModel):
                f"Email      : {self.email}\n" \
                f"phone      : {self.phone}\n"
 
-
-class querry(BaseModel):
-    __tablename__ = "querry"
-
-    id = Column(Integer, primary_key=True)
-    place = Column(Integer)
-
-
 class auditorium(BaseModel):
     __tablename__ = "auditorium"
 
