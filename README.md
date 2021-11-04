@@ -25,4 +25,8 @@ lab-6
 
 lab-7
 
+POST user
 curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Max\"}" http://localhost:5000/user
+
+GET user by id
+curl -X GET http://localhost:5000/user/Max

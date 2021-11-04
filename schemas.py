@@ -7,9 +7,6 @@ from models import user
 #         fields = ("id", "username")
 
 
-def create_entry(model_class, **kwargs):
-    return model_class(**kwargs)
-
 class UserSchema(Schema):
     id = fields.Integer()
     username = fields.String()

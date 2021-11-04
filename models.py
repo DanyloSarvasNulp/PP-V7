@@ -11,13 +11,14 @@ SessionFactory = sessionmaker(bind=engine)
 Session = scoped_session(SessionFactory)
 
 BaseModel = declarative_base()
+BaseModel.query = Session.query_property()
 
 
 class user(BaseModel):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
-    username = Column(VARCHAR(45))
+    username = Column(VARCHAR(45), unique=True)
     firstName = Column(VARCHAR(45))
     lastName = Column(VARCHAR(45))
     email = Column(VARCHAR(45))
