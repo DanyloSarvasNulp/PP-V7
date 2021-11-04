@@ -11,6 +11,7 @@ waitress = "^2.0.0"
 alembic = "^1.7.4"
 SQLAlchemy = "^1.4.26"
 PyMySQL = "^1.0.2"
+cryptography = "^35.0.0"
 
 [tool.poetry.dev-dependencies]
 

@@ -31,6 +31,10 @@ class user(BaseModel):
                f"Email      : {self.email}\n" \
                f"phone      : {self.phone}\n"
 
+    def __init__(self, username):
+        self.username = username
+
+
 class auditorium(BaseModel):
     __tablename__ = "auditorium"
 
@@ -48,5 +52,3 @@ class access(BaseModel):
 
 
 BaseModel.metadata.create_all(engine)
-
-

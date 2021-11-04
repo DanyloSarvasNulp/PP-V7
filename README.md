@@ -22,3 +22,7 @@ lab-6
 >>> alembic revision -m "add models" --autogenerate
 2. upgrade head
 >>> alembic upgrade head
+
+lab-7
+curl -X POST -H "Content-Type:application/json" --data-binary
+ "{\"username\": \"Max\"}" http://localhost:5000/user
