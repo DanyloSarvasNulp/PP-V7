@@ -24,5 +24,5 @@ lab-6
 >>> alembic upgrade head
 
 lab-7
-curl -X POST -H "Content-Type:application/json" --data-binary
- "{\"username\": \"Max\"}" http://localhost:5000/user
+
+curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Max\"}" http://localhost:5000/user
