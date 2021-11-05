@@ -28,5 +28,8 @@ lab-7
 POST user
 curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Max\"}" http://localhost:5000/user
 
-GET user by id
+GET user by username
 curl -X GET http://localhost:5000/user/Max
+
+DELETE user by username
+curl -X DELETE http://localhost:5000/user/Max
