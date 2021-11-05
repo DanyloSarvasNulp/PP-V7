@@ -26,10 +26,15 @@ lab-6
 lab-7
 
 POST user
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Max\"}" http://localhost:5000/user
+curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Pax\"}" http://localhost:5000/user
+curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"theMaxon\", \"firstName\": \"MaxMax\"}" http://localhost:5000/user
 
 GET user by username
 curl -X GET http://localhost:5000/user/Max
 
+PUT user
+curl -X PUT -H "Content-Type:application/json" --data-binary "{\"firstName\": \"NewName\"}" http://localhost:5000/user/17
+
+
 DELETE user by username
-curl -X DELETE http://localhost:5000/user/Max
+curl -X DELETE http://localhost:5000/user/17

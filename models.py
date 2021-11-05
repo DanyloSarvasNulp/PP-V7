@@ -32,8 +32,9 @@ class user(BaseModel):
                f"Email      : {self.email}\n" \
                f"phone      : {self.phone}\n"
 
-    def __init__(self, username):
+    def __init__(self, username, firstName):
         self.username = username
+        self.firstName = firstName
 
 
 class auditorium(BaseModel):

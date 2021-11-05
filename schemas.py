@@ -10,7 +10,7 @@ from models import user
 class UserSchema(Schema):
     id = fields.Integer()
     username = fields.String()
-    # firstName = fields.String()
+    firstName = fields.String()
     # lastName = fields.String()
     # email = fields.String()
     # password = fields.String()
