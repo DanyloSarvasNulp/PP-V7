@@ -10,3 +10,17 @@ class UserSchema(Schema):
     password = fields.String()
     phone = fields.String()
     user_status = fields.Boolean()
+
+
+class AuditoriumSchema(Schema):
+    id = fields.Integer()
+    is_free = fields.Boolean()
+
+
+class AccessSchema(Schema):
+    id = fields.Integer()
+    auditorium_id = fields.Integer()
+    user_id = fields.Integer()
+    start = fields.DateTime()
+    end = fields.DateTime()
+

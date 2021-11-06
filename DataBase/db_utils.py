@@ -15,7 +15,7 @@ def get_entry_by_id(model_class, id, **kwargs):
     return session.query(model_class).filter_by(id=id, **kwargs).first()
 
 
-def get_entry_by_username(model_class, username, **kwargs):
+def get_entry_by_username(model_class, username, **kwargs):  # user-only
     session = Session()
     return session.query(model_class).filter_by(username=username, **kwargs).first()
 

@@ -32,10 +32,14 @@ class User(BaseModel):
                f"Email      : {self.email}\n" \
                f"phone      : {self.phone}\n"
 
-    def __init__(self, username, first_name=None, last_name=None):
+    def __init__(self, username, first_name=None, last_name=None, email=None, password=None, phone=None, user_status=False):
         self.username = username
         self.first_name = first_name
         self.last_name = last_name
+        self.email = email
+        self.password = password
+        self.phone = phone
+        self.user_status = user_status
 
 
 class Auditorium(BaseModel):
@@ -43,6 +47,9 @@ class Auditorium(BaseModel):
 
     id = Column(Integer, primary_key=True)
     is_free = Column(Boolean)
+
+    def __init__(self, is_free=True):
+        self.is_free = is_free
 
 
 class Access(BaseModel):
@@ -53,6 +60,12 @@ class Access(BaseModel):
     user_id = Column(Integer, ForeignKey(User.id))
     start = Column(DateTime)
     end = Column(DateTime)
+
+    def __init__(self, auditorium_id, user_id, start=None, end=None):
+        self.auditorium_id = auditorium_id
+        self.user_id = user_id
+        self.start = start
+        self.end = end
 
 
 BaseModel.metadata.create_all(engine)
