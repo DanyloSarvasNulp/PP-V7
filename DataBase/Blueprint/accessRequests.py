@@ -22,26 +22,19 @@ def create_access():
     return jsonify(AccessSchema().dump(access_obj))
 
 
-@app.route("/access", methods=["GET"])  # get all access
+@app.route("/access", methods=["GET"])  # get all accesses
 def get_access():
     access_array = Access.query.all()
     return jsonify(AccessSchema(many=True).dump(access_array))
-
-
-@app.route("/access/<int:id>", methods=["GET"])  # get access by id
-def get_access_by_id(id):
-    access_obj = get_entry_by_id(Access, id)
-    return jsonify(AccessSchema().dump(access_obj))
-
-
-@app.route("/access/<int:id>", methods=["PUT"])  # update access by id
-def update_access_by_id(id):
-    access_data = AccessSchema().load(request.get_json())
-    access_obj = update_entry_by_id(Access, id, **access_data)
-    return jsonify(AccessSchema().dump(access_obj))
-
-
-@app.route("/access/<int:id>", methods=["DELETE"])  # delete access by id
-def delete_access_by_id(id):
-    access_obj = delete_entry_by_id(Access, id)
-    return jsonify(AccessSchema().dump(access_obj))
+#
+#
+# @app.route("/access/<int:id>,<int:id>", methods=["GET"])  # get access by id
+# def get_access_by_id(id):
+#     access_obj = get_entry_by_id(Access, id)
+#     return jsonify(AccessSchema().dump(access_obj))
+#
+#
+# @app.route("/access/<int:id>", methods=["DELETE"])  # delete access by id
+# def delete_access_by_id(id):
+#     access_obj = delete_entry_by_id(Access, id)
+#     return jsonify(AccessSchema().dump(access_obj))
