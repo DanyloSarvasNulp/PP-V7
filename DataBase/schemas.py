@@ -14,6 +14,8 @@ class UserSchema(Schema):
 
 class AuditoriumSchema(Schema):
     id = fields.Integer()
+    auditorium_num = fields.Integer()
+    max_people_count = fields.Integer()
     is_free = fields.Boolean()
 
 

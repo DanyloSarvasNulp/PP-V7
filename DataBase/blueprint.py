@@ -15,7 +15,7 @@ from app import app
 #
 # from flask import request, jsonify
 
-import Blueprint.userRequests
+import Blueprint.userRequests, Blueprint.auditoriumRequests
 
 
 if __name__ == "__main__":

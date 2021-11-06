@@ -35,6 +35,10 @@ User requests:
 > 
 >>curl -X GET http://localhost:5000/user/Pax
 >
+>GET user by id
+> 
+>>curl -X GET http://localhost:5000/user/1
+> 
 >PUT user
 > 
 >>curl -X PUT -H "Content-Type:application/json" --data-binary "{\"first_name\": \"NewName\"}" http://localhost:5000/user/17
@@ -42,3 +46,22 @@ User requests:
 >DELETE user by username
 > 
 >>curl -X DELETE http://localhost:5000/user/17
+
+Auditorium requests:
+>POST auditorium
+>
+>>curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Pax\"}" http://localhost:5000/auditorium
+> 
+>>curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"the\", \"first_name\": \"Max\"}" http://localhost:5000/auditorium
+>
+>GET user by username
+> 
+>>curl -X GET http://localhost:5000/auditorium/Pax
+>
+>PUT user
+> 
+>>curl -X PUT -H "Content-Type:application/json" --data-binary "{\"first_name\": \"NewName\"}" http://localhost:5000/auditorium/17
+>
+>DELETE user by username
+> 
+>>curl -X DELETE http://localhost:5000/auditorium/17

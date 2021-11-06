@@ -46,9 +46,13 @@ class Auditorium(BaseModel):
     __tablename__ = "auditorium"
 
     id = Column(Integer, primary_key=True)
+    auditorium_num = Column(Integer)
+    max_people_count = Column(Integer)
     is_free = Column(Boolean)
 
-    def __init__(self, is_free=True):
+    def __init__(self, auditorium_num, max_people_count, is_free=True):
+        self.auditorium_num = auditorium_num
+        self.max_people_count = max_people_count
         self.is_free = is_free
 
 
