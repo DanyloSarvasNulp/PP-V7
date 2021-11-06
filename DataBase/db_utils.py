@@ -30,7 +30,7 @@ def update_entry_by_id(model_class, id, commit=True, **kwargs):
     return model
 
 
-def delete_entry_by_id(model_class, id, commit=True, **kwargs):
+def delete_entry_by_id(model_class, id, commit=True):
     session = Session()
     model = session.query(model_class).filter_by(id=id).first()
     session.delete(model)

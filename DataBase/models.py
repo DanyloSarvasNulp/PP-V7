@@ -14,17 +14,17 @@ BaseModel = declarative_base()
 BaseModel.query = Session.query_property()
 
 
-class user(BaseModel):
+class User(BaseModel):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
     username = Column(VARCHAR(45), unique=True)
-    firstName = Column(VARCHAR(45))
-    lastName = Column(VARCHAR(45))
+    first_name = Column(VARCHAR(45))
+    last_name = Column(VARCHAR(45))
     email = Column(VARCHAR(45))
     password = Column(VARCHAR(45))
     phone = Column(VARCHAR(15))
-    userStatus = Column(Boolean)
+    user_status = Column(Boolean)
 
     def __str__(self):
         return f"User ID    : {self.id}\n" \
@@ -32,23 +32,25 @@ class user(BaseModel):
                f"Email      : {self.email}\n" \
                f"phone      : {self.phone}\n"
 
-    def __init__(self, username, firstName):
+    def __init__(self, username, first_name=None, last_name=None):
         self.username = username
-        self.firstName = firstName
+        self.first_name = first_name
+        self.last_name = last_name
 
 
-class auditorium(BaseModel):
+class Auditorium(BaseModel):
     __tablename__ = "auditorium"
 
     id = Column(Integer, primary_key=True)
     is_free = Column(Boolean)
 
 
-class access(BaseModel):
+class Access(BaseModel):
     __tablename__ = "access"
+
     id = Column(Integer, primary_key=True)
-    auditorium_id = Column(Integer, ForeignKey(auditorium.id))
-    user_id = Column(Integer, ForeignKey(user.id))
+    auditorium_id = Column(Integer, ForeignKey(Auditorium.id))
+    user_id = Column(Integer, ForeignKey(User.id))
     start = Column(DateTime)
     end = Column(DateTime)
 

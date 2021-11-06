@@ -1,15 +1,15 @@
-from models import Session, user, access, auditorium
+from DataBase.models import Session, User, Access, Auditorium
 
 
-user1 = user(username="pusyBOY", email="customemail@gmail.com", phone="0935215742")
-user2 = user(username="SLAVIC", email="slavemail@gmail.com", phone="0357315412")
-user3 = user(username="Khodack", email="nikeriss@gmail.com", phone="0163715556")
+user1 = User(username="pusyBOY", email="customemail@gmail.com", phone="0935215742")
+user2 = User(username="SLAVIC", email="slavemail@gmail.com", phone="0357315412")
+user3 = User(username="Khodack", email="nikeriss@gmail.com", phone="0163715556")
 
-auditorium1 = auditorium(is_free=True)
-auditorium2 = auditorium(is_free=True)
+auditorium1 = Auditorium(is_free=True)
+auditorium2 = Auditorium(is_free=True)
 
-access1 = access(auditorium_id=1, user_id=1)
-access2 = access(auditorium_id=2, user_id=2)
+access1 = Access(auditorium_id=1, user_id=1)
+access2 = Access(auditorium_id=2, user_id=2)
 
 with Session() as session:
     session.add(user1)
@@ -26,5 +26,5 @@ with Session() as session:
     session.commit()
 
 
-print(session.query(user).all()[0])
+print(session.query(User).all()[0])
 

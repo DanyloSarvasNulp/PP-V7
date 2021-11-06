@@ -4,37 +4,35 @@ Provided you have pyenv and poetry on your pc do the following:
 
 1. locate project directory
 2. create virtual environment by typing:
->>> poetry shell
+> poetry shell
 3. install dependencies by command
->>> poetry install
+> poetry install
 
 lab-4
 
 1. type 
->>> waitress-serve --port=8000 app:app
+> waitress-serve --port=8000 app:app
 2. in web-browser write URL: 
->>> http://127.0.0.1:8000/api/v1/hello-world-7
+> http://127.0.0.1:8000/api/v1/hello-world-7
 
 lab-6
 1. create revision
->>> alembic stamp head
-
->>> alembic revision -m "add models" --autogenerate
+> alembic stamp head
+> alembic revision -m "add models" --autogenerate
 2. upgrade head
->>> alembic upgrade head
+> alembic upgrade head
 
 lab-7
 
 POST user
 curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Pax\"}" http://localhost:5000/user
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"theMaxon\", \"firstName\": \"MaxMax\"}" http://localhost:5000/user
+curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"theMaxon\", \"first_name\": \"MaxMax\"}" http://localhost:5000/user
 
 GET user by username
 curl -X GET http://localhost:5000/user/Max
 
 PUT user
-curl -X PUT -H "Content-Type:application/json" --data-binary "{\"firstName\": \"NewName\"}" http://localhost:5000/user/17
-
+curl -X PUT -H "Content-Type:application/json" --data-binary "{\"first_name\": \"NewName\"}" http://localhost:5000/user/17
 
 DELETE user by username
 curl -X DELETE http://localhost:5000/user/17
