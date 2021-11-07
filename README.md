@@ -26,6 +26,7 @@ lab-6
 1. create revision
 
 > alembic stamp head
+> 
 > alembic revision -m "add models" --autogenerate
 
 2. upgrade head

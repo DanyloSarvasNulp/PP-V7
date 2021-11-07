@@ -20,6 +20,7 @@ class AuditoriumSchema(Schema):
 
 
 class AccessSchema(Schema):
+    id = fields.Integer()
     auditorium_id = fields.Integer()
     user_id = fields.Integer()
     start = fields.DateTime()
