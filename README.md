@@ -97,8 +97,8 @@ Access requests:
 >
 > GET access by ids
 > 
->> todo
+>> curl -X GET http://localhost:5000/access/2,2
 > 
 > DELETE access by ids
 > 
->> todo
+>> curl -X DELETE http://localhost:5000/access/2,2
