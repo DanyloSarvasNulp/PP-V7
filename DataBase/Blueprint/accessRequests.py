@@ -5,9 +5,6 @@ from DataBase.schemas import (
 
 from DataBase.db_utils import (
     create_entry,
-    get_entry_by_id,
-    update_entry_by_id,
-    delete_entry_by_id,
     get_entry_by_ids,
     delete_entry_by_ids,
 )
