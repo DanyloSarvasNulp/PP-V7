@@ -38,9 +38,9 @@ lab-7
 User requests:
 > POST user
 >
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Pax\"}" http://localhost:5000/user
+>> curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Pax\", \"password\": \"abcdefg\"}" http://localhost:5000/user
 >
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"theMax0n\", \"first_name\": \"Max\"}" http://localhost:5000/user
+>> curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"theMax0n\", \"first_name\": \"Max\", \"password\": \"cdasft\"}" http://localhost:5000/user
 >
 > GET all users
 >
