@@ -1,7 +1,8 @@
 from app import app
-
-from DataBase.schemas import (
-    UserSchema)
+from DataBase.schemas import UserSchema
+from DataBase.models import User
+from flask import request
+import bcrypt
 
 from DataBase.db_utils import (
     create_entry,
@@ -12,14 +13,15 @@ from DataBase.db_utils import (
     delete_entry_by_id,
 )
 
-from DataBase.models import User
-
-from flask import request, jsonify
-
 
 @app.route("/user", methods=["POST"])  # create new user
 def create_user():
     user_data = UserSchema().load(request.get_json())
+
+    pwd = request.json.get('password', None)
+    hashed_pwd = bcrypt.hashpw(pwd.encode("utf-8"), bcrypt.gensalt())
+    user_data.update({"password": hashed_pwd})
+
     return create_entry(User, UserSchema, **user_data)
 
 
@@ -35,7 +37,7 @@ def get_user_by_id(id):
 
 @app.route("/user/<string:username>", methods=["GET"])  # get user by username
 def get_user_by_username(username):
-    return get_entry_by_username(User, username)
+    return get_entry_by_username(User, UserSchema, username)
 
 
 @app.route("/user/<int:id>", methods=["PUT"])  # update user by id
