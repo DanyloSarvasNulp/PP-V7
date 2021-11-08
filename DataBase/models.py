@@ -30,7 +30,7 @@ class User(BaseModel):
         return f"User ID    : {self.id}\n" \
                f"Username      : {self.username}\n" \
                f"Email      : {self.email}\n" \
-               f"phone      : {self.phone}\n"
+               f"Phone      : {self.phone}\n"
 
     def __init__(self, username, first_name=None, last_name=None, email=None, password=None, phone=None, user_status=False):
         self.username = username

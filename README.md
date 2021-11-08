@@ -54,7 +54,7 @@ User requests:
 >
 >> curl -X GET http://localhost:5000/user/1
 >
-> PUT user
+> PUT user by id
 >
 >> curl -X PUT -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Ivan\"}" http://localhost:5000/user/2
 >
