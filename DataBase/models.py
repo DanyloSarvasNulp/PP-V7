@@ -65,7 +65,7 @@ class Access(BaseModel):
     start = Column(DateTime)
     end = Column(DateTime)
 
-    def __init__(self, auditorium_id, user_id, start=None, end=None):
+    def __init__(self, auditorium_id, user_id, start, end):
         self.auditorium_id = auditorium_id
         self.user_id = user_id
         self.start = start

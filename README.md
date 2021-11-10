@@ -61,6 +61,10 @@ User requests:
 > DELETE user by id
 >
 >> curl -X DELETE http://localhost:5000/user/1
+> 
+>> DELETE user by username
+> 
+>> curl -X DELETE http://localhost:5000/user/Pax
 
 Auditorium requests:
 > POST auditorium
@@ -88,7 +92,7 @@ Auditorium requests:
 Access requests:
 > POST access
 > 
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"2\", \"user_id\": \"2\"}" http://localhost:5000/access
+>> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"2\", \"user_id\": \"3\", \"start\": \"2021-01-01 1:00:00\", \"end\": \"2021-01-01 7:00:00\"}" http://localhost:5000/access
 > 
 >> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"2\", \"user_id\": \"3\", \"start\": \"2021-01-01 2:00:00\", \"end\": \"2021-01-01 6:00:00\"}" http://localhost:5000/access
 > 

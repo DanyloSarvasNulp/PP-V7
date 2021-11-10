@@ -11,6 +11,7 @@ from DataBase.db_utils import (
     get_entry_by_username,
     update_entry_by_id,
     delete_entry_by_id,
+    delete_entry_by_username,
 )
 
 
@@ -49,3 +50,8 @@ def update_user_by_id(id):
 @app.route("/user/<int:id>", methods=["DELETE"])  # delete user by id
 def delete_user_by_id(id):
     return delete_entry_by_id(User, UserSchema, id)
+
+
+@app.route("/user/<string:username>", methods=["DELETE"])  # delete user by id
+def delete_user_by_id(username):
+    return delete_entry_by_username(User, UserSchema, username)

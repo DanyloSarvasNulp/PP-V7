@@ -122,6 +122,16 @@ def delete_entry_by_id(model_class, model_schema, id):  # DELETE entity by id
 
 
 @db_lifecycle
+@session_lifecycle
+def delete_entry_by_username(model_class, model_schema, username):  # DELETE user by username
+    entry = session.query(model_class).filter_by(username=username).first()
+    if entry is None:
+        raise InvalidUsage("Object not found", status_code=404)
+    session.delete(entry)
+    return jsonify(model_schema().dump(entry))
+
+
+@db_lifecycle
 def get_entry_by_ids(model_class, model_schema, user_id, auditorium_id):  # GET access by user and auditorium ids
     entry = session.query(model_class).filter_by(user_id=user_id, auditorium_id=auditorium_id).first()
     if entry is None:

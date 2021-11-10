@@ -3,8 +3,9 @@ from DataBase.schemas import AccessSchema
 from DataBase.models import Access
 from flask import request
 from datetime import datetime, timedelta
-from DataBase.db_utils import InvalidUsage
+
 from DataBase.db_utils import (
+    InvalidUsage,
     create_entry,
     get_entries,
     get_entry_by_ids,
