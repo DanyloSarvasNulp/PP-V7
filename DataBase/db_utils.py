@@ -3,6 +3,8 @@ from flask import jsonify
 from functools import wraps
 from app import app
 import sqlalchemy
+from datetime import datetime, timedelta
+import json
 
 session = Session()
 
@@ -45,7 +47,7 @@ def db_lifecycle(func):
             elif isinstance(e, TypeError):
                 return jsonify({'message': e.args[0], 'type': 'TypeError'}), 400
             elif isinstance(e, sqlalchemy.exc.IntegrityError):
-                return jsonify({'message': "duplicate unique value", 'type': 'IntegrityError'}), 400
+                return jsonify({'message': "duplicate unique value", 'type': 'IntegrityError'}), 403
             # elif isinstance(e, sqlalchemy.exc.IntegrityError):
             #     return jsonify({'message': "duplicate unique value", 'type': 'IntegrityError'}), 400
             else:
@@ -135,3 +137,29 @@ def delete_entry_by_ids(model_class, model_schema, user_id, auditorium_id):  # D
         raise InvalidUsage("Object not found", status_code=404)
     session.delete(entry)
     return jsonify(model_schema().dump(entry))
+
+
+@db_lifecycle
+def check_time(model_class, model_schema, main_start, main_end):
+
+    entries = session.query(model_class).all()
+    for entry in entries:
+        start = entry.start
+        end = entry.end
+        # start = entry.json.get('start', None)
+        # start = entry.strptime(start, '%Y-%m-%d %H:%M:%S')
+        # end = entry.json.get('end', None)
+        # end = entry.strptime(end, '%Y-%m-%d %H:%M:%S')
+
+        if start < main_start and (end > main_start and end < main_end ):
+            raise InvalidUsage("Time already reserved", status_code=404)
+
+        if start > main_start and end < main_end:
+            raise InvalidUsage("Time already reserved", status_code=404)
+
+        if (start > main_start and start < main_end) and end > main_end:
+            raise InvalidUsage("Time already reserved", status_code=404)
+
+        if start < main_start and end > main_end:
+            raise InvalidUsage("Time already reserved", status_code=404)
+        raise InvalidUsage("Time already reserved", status_code=404)

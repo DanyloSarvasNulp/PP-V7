@@ -90,7 +90,7 @@ Access requests:
 > 
 >> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"2\", \"user_id\": \"2\"}" http://localhost:5000/access
 > 
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"2\", \"user_id\": \"2\", \"start\": \"2021-04-28 11:15:00\", \"end\": \"2021-04-28 11:45:00\"}" http://localhost:5000/access
+>> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"2\", \"user_id\": \"3\", \"start\": \"2021-01-01 2:00:00\", \"end\": \"2021-01-01 6:00:00\"}" http://localhost:5000/access
 > 
 > GET all accesses
 > 
