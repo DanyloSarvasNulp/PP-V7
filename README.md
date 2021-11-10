@@ -62,7 +62,7 @@ User requests:
 >
 >> curl -X DELETE http://localhost:5000/user/1
 > 
->> DELETE user by username
+> DELETE user by username
 > 
 >> curl -X DELETE http://localhost:5000/user/Pax
 

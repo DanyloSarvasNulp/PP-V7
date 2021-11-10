@@ -53,5 +53,5 @@ def delete_user_by_id(id):
 
 
 @app.route("/user/<string:username>", methods=["DELETE"])  # delete user by id
-def delete_user_by_id(username):
+def delete_user_by_username(username):
     return delete_entry_by_username(User, UserSchema, username)
