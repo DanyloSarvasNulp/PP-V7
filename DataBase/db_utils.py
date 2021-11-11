@@ -150,10 +150,12 @@ def delete_entry_by_ids(model_class, model_schema, user_id, auditorium_id):  # D
 
 
 @db_lifecycle
-def check_time(model_class, model_schema, main_start, main_end):
+def check_time(model_class, model_schema, id, main_start, main_end):
 
     entries = session.query(model_class).all()
     for entry in entries:
+        if entry.auditorium_id != id:
+            continue
         start = entry.start
         end = entry.end
         # start = entry.json.get('start', None)
@@ -162,14 +164,14 @@ def check_time(model_class, model_schema, main_start, main_end):
         # end = entry.strptime(end, '%Y-%m-%d %H:%M:%S')
 
         if start < main_start and (end > main_start and end < main_end ):
-            raise InvalidUsage("Time already reserved", status_code=404)
+            raise InvalidUsage("Time already reserved (1)", status_code=404)
 
         if start > main_start and end < main_end:
-            raise InvalidUsage("Time already reserved", status_code=404)
+            raise InvalidUsage("Time already reserved (2)", status_code=404)
 
         if (start > main_start and start < main_end) and end > main_end:
-            raise InvalidUsage("Time already reserved", status_code=404)
+            raise InvalidUsage("Time already reserved (3)", status_code=404)
 
         if start < main_start and end > main_end:
-            raise InvalidUsage("Time already reserved", status_code=404)
+            raise InvalidUsage("Time already reserved (4)", status_code=404)
         raise InvalidUsage("Time already reserved", status_code=404)

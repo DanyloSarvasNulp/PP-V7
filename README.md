@@ -92,9 +92,9 @@ Auditorium requests:
 Access requests:
 > POST access
 > 
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"2\", \"user_id\": \"3\", \"start\": \"2021-01-01 1:00:00\", \"end\": \"2021-01-01 7:00:00\"}" http://localhost:5000/access
+>> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"3\", \"user_id\": \"6\", \"start\": \"2021-01-01 1:00:00\", \"end\": \"2021-01-01 4:00:00\"}" http://localhost:5000/access
 > 
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"2\", \"user_id\": \"3\", \"start\": \"2021-01-01 2:00:00\", \"end\": \"2021-01-01 6:00:00\"}" http://localhost:5000/access
+>> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"3\", \"user_id\": \"6\", \"start\": \"2021-01-01 2:00:00\", \"end\": \"2021-01-01 6:00:00\"}" http://localhost:5000/access
 > 
 > GET all accesses
 > 

@@ -1,6 +1,6 @@
 from app import app
-from DataBase.schemas import UserSchema
-from DataBase.models import User
+from DataBase.schemas import UserSchema, AccessSchema
+from DataBase.models import User, Access
 from flask import request
 import bcrypt
 
@@ -52,6 +52,6 @@ def delete_user_by_id(id):
     return delete_entry_by_id(User, UserSchema, id)
 
 
-@app.route("/user/<string:username>", methods=["DELETE"])  # delete user by id
+@app.route("/user/<string:username>", methods=["DELETE"])  # delete user by username
 def delete_user_by_username(username):
     return delete_entry_by_username(User, UserSchema, username)

@@ -28,7 +28,8 @@ def create_access():
     if time > timedelta(hours=5):
         raise InvalidUsage("Invalid access time (too long)", status_code=400)
 
-    check_time(Access, AccessSchema, start, end)
+    auditorium_id = int(request.json.get('auditorium_id', None))
+    check_time(Access, AccessSchema, auditorium_id, start, end)
     return create_entry(Access, AccessSchema, **access_data)
 
 
