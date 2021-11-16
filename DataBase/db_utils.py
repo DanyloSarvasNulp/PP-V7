@@ -47,7 +47,14 @@ def db_lifecycle(func):
             elif isinstance(e, TypeError):
                 return jsonify({'message': e.args[0], 'type': 'TypeError'}), 400
             elif isinstance(e, sqlalchemy.exc.IntegrityError):
-                return jsonify({'message': "duplicate unique value", 'type': 'IntegrityError'}), 403
+                if str(e.args[0]).find("Duplicate entry") != -1:
+                    raise InvalidUsage("Duplicate entry", status_code=400)
+                if str(e.args[0]).find("Cannot delete or update a parent row: a foreign key constraint fails") != -1:
+                    raise InvalidUsage("Cannot delete or update this object", status_code=400)
+                if str(e.args[0]).find("Cannot add or update a child row: a foreign key constraint fails") != -1:
+                    raise InvalidUsage("Cannot add or update this object, incorrect data", status_code=400)
+                else:
+                    raise InvalidUsage("Incorrect data", status_code=400)
             # elif isinstance(e, sqlalchemy.exc.IntegrityError):
             #     return jsonify({'message': "duplicate unique value", 'type': 'IntegrityError'}), 400
             else:
@@ -174,4 +181,3 @@ def check_time(model_class, model_schema, id, main_start, main_end):
 
         if start < main_start and end > main_end:
             raise InvalidUsage("Time already reserved (4)", status_code=404)
-        raise InvalidUsage("Time already reserved", status_code=404)
