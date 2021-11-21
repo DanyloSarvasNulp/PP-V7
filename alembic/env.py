@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 
-from models import BaseModel
+from DataBase.models import BaseModel
 
 import sys
 sys.path.append(r"C:\Users\ded\PycharmProjects\labs")
