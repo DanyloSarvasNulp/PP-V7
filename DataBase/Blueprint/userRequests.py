@@ -67,8 +67,8 @@ def create_user():
     username = request.json.get('username', None)
 
     pwd = request.json.get('password', None)
-    # hashed_pwd = bcrypt.hashpw(pwd.encode("utf-8"), bcrypt.gensalt())
-    # user_data.update({"password": hashed_pwd})
+    hashed_pwd = bcrypt.hashpw(pwd.encode("utf-8"), bcrypt.gensalt())
+    user_data.update({"password": hashed_pwd})
     user_data.update({"password": pwd})
     users[username] = pwd
 
