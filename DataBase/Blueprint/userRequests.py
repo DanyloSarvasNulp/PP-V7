@@ -83,7 +83,7 @@ def create_user():
 def get_user():
     cur_user = auth.current_user()
     print(cur_user)
-    return jsonify(UserSchema(many=True).dump(session.query(User).filter_by(username=cur_user.username).all()))
+    return jsonify(UserSchema().dump(session.query(User).filter_by(username=cur_user.username).first()))
 
 
 # curl -X GET -u Pax1:abcdefg http://localhost:5000/user
