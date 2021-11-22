@@ -130,12 +130,13 @@ def update_user_by_id(id):
 def delete_user_by_id(id):
     cur_user = auth.current_user()
     print(cur_user)
-    if id == cur_user.id:
+    if id == int(cur_user.id):
         return delete_entry_by_id(User, UserSchema, id)
     else:
         raise InvalidUsage("Object not found", status_code=404)
 
 # curl -X DELETE -u Pax2:abcdefg http://localhost:5000/user/1
+
 
 @app.route("/user/<string:username>", methods=["DELETE"])  # delete user by username
 @auth.login_required

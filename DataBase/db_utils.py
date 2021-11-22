@@ -143,7 +143,7 @@ def get_entry_by_ids(model_class, model_schema, user_id, auditorium_id):  # GET 
     entry = session.query(model_class).filter_by(user_id=user_id, auditorium_id=auditorium_id).first()
     if entry is None:
         raise InvalidUsage("Object not found", status_code=404)
-    return jsonify(model_schema().dump(entry))
+    return jsonify(model_schema(many=True).dump(entry))
 
 
 @db_lifecycle

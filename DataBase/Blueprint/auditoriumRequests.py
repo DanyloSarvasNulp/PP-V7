@@ -10,12 +10,13 @@ from DataBase.db_utils import (
     update_entry_by_id,
     delete_entry_by_id,
 )
-
+# TODO: solve problem
 
 @app.route("/auditorium", methods=["POST"])  # create new auditorium
 def create_auditorium():
     auditorium_data = AuditoriumSchema().load(request.get_json())
     return create_entry(Auditorium, AuditoriumSchema, **auditorium_data)
+# curl -X POST -H "Content-Type:application/json" --data-binary "{\"max_people_count\": \"48\"}" http://localhost:5000/auditorium
 
 
 @app.route("/auditorium", methods=["GET"])  # get all auditoriums
