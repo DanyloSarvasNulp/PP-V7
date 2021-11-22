@@ -12,6 +12,10 @@ alembic = "^1.7.4"
 SQLAlchemy = "^1.4.26"
 PyMySQL = "^1.0.2"
 cryptography = "^35.0.0"
+Flask-HTTPAuth = "^4.5.0"
+bcrypt = "^3.2.0"
+Flask-Bcrypt = "^0.7.1"
+marshmallow = "^3.14.1"
 
 [tool.poetry.dev-dependencies]
 
