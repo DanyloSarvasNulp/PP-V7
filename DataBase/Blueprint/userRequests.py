@@ -1,4 +1,3 @@
-from app import app
 from DataBase.schemas import UserSchema, AccessSchema
 from DataBase.models import User, Access
 from flask import request, jsonify
@@ -8,20 +7,11 @@ from DataBase.models import Session
 
 session = Session()
 
-from DataBase.db_utils import (
-    create_entry,
-    get_entries,
-    get_entry_by_id,
-    get_entry_by_username,
-    update_entry_by_id,
-    delete_entry_by_id,
-    delete_entry_by_username,
-)
+from DataBase.db_utils import *
 
 auth = HTTPBasicAuth()
 users = {}
 users["username"] = "password"
-
 
 
 class InvalidUsage(Exception):
@@ -40,17 +30,15 @@ class InvalidUsage(Exception):
         rv['status_code'] = self.status_code
         return rv
 
+
 @auth.verify_password
 def verify_password(username, password):
     user = session.query(User).filter_by(username=username).first()
-    print(user)
-    if not user:
-        return False
-    print(bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")))
-    if not bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
-        return False
-    if user:
+
+    if user and bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
         return user
+    return False
+
 
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error):
@@ -59,92 +47,44 @@ def handle_invalid_usage(error):
     return response
 
 
-# bcrypt.checkpw(users[username], bcrypt.hashpw(password.encode("utf-8"))
 @app.route("/user", methods=["POST"])  # create new user
 def create_user():
     user_data = UserSchema().load(request.get_json())
 
-    username = request.json.get('username', None)
-
     pwd = request.json.get('password', None)
     hashed_pwd = bcrypt.hashpw(pwd.encode("utf-8"), bcrypt.gensalt())
     user_data.update({"password": hashed_pwd})
-    user_data.update({"password": pwd})
-    users[username] = pwd
 
     return create_entry(User, UserSchema, **user_data)
 
 
-# curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Pax1\", \"password\": \"abcdefg\"}" http://localhost:5000/user
+def get_entry_by_username(func):
+    @wraps(func)
+    def wrapper():
+        entry = session.query(User).filter_by(username=auth.current_user().username).first()
+        if entry is None:
+            raise InvalidUsage("Object not found", status_code=404)
+        return func(entry)
+
+    return wrapper
 
 
-@app.route("/user", methods=["GET"])  # get all users
+@app.route("/user", methods=["GET"])  # get user by username
 @auth.login_required
-def get_user():
-    cur_user = auth.current_user()
-    print(cur_user)
-    return jsonify(UserSchema().dump(session.query(User).filter_by(username=cur_user.username).first()))
+@get_entry_by_username
+def get_user_by_username(entry):
+    return jsonify(UserSchema().dump(entry))
 
 
-# curl -X GET -u Pax1:abcdefg http://localhost:5000/user
-
-
-@app.route("/user/<int:id>", methods=["GET"])  # get user by id
+@app.route("/user", methods=["PUT"])  # update user by username
 @auth.login_required
-def get_user_by_id(id):
-    cur_user = auth.current_user()
-    print(cur_user)
-    if cur_user.id == id:
-        return get_entry_by_id(User, UserSchema, id)
-    else:
-        raise InvalidUsage("Object not found", status_code=404)
+@get_entry_by_username
+def update_user_by_username(entry):
+    return update_entity(UserSchema, entry)
 
 
-@app.route("/user/<string:username>", methods=["GET"])  # get user by username
+@app.route("/user", methods=["DELETE"])  # delete user by username
 @auth.login_required
-def get_user_by_username(username):
-    cur_user = auth.current_user()
-    print(cur_user)
-    if cur_user.username == username:
-        return get_entry_by_username(User, UserSchema, username)
-    else:
-        raise InvalidUsage("Object not found", status_code=404)
-
-
-@app.route("/user/<int:id>", methods=["PUT"])  # update user by id
-@auth.login_required
-def update_user_by_id(id):
-    cur_user = auth.current_user()
-    print(cur_user)
-    if cur_user.id == id:
-        user_data = UserSchema().load(request.get_json())
-        return update_entry_by_id(User, UserSchema, id, **user_data)
-    else:
-        raise InvalidUsage("Object not found", status_code=404)
-
-
-# curl -X PUT -u Pax1:abcdefg -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Ivan\"}" http://localhost:5000/user/5
-
-@app.route("/user/<int:id>", methods=["DELETE"])  # delete user by id
-@auth.login_required
-def delete_user_by_id(id):
-    cur_user = auth.current_user()
-    print(cur_user)
-    if id == int(cur_user.id):
-        return delete_entry_by_id(User, UserSchema, id)
-    else:
-        raise InvalidUsage("Object not found", status_code=404)
-
-# curl -X DELETE -u Pax2:abcdefg http://localhost:5000/user/1
-
-
-@app.route("/user/<string:username>", methods=["DELETE"])  # delete user by username
-@auth.login_required
-def delete_user_by_username(username):
-    cur_user = auth.current_user()
-    print(cur_user)
-    if cur_user.username == username:
-        return delete_entry_by_username(User, UserSchema, username)
-    else:
-        raise InvalidUsage("Invalid entered value", status_code=404)
-
+@get_entry_by_username
+def delete_user_by_username(entry):
+    return delete_entity(UserSchema, entry)

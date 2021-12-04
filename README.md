@@ -50,21 +50,21 @@ User requests:
 >
 >> curl -X GET http://localhost:5000/user/theMax0n
 >
-> GET user by id
+> GET user
 >
->> curl -X GET http://localhost:5000/user/1
+>> curl -X GET -u Pax:abcdefg http://localhost:5000/user
 >
-> PUT user by id
+> PUT user
 >
->> curl -X PUT -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Ivan\"}" http://localhost:5000/user/2
+>> curl -X PUT -u Pax:abcdefg -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Ivan\"}" http://localhost:5000/user
 >
-> DELETE user by id
+> DELETE user
 >
->> curl -X DELETE http://localhost:5000/user/1
+>> curl -X DELETE http://localhost:5000/user
 > 
 > DELETE user by username
 > 
->> curl -X DELETE http://localhost:5000/user/Pax
+>> curl -X DELETE -u Pax:abcdefg http://localhost:5000/user
 
 Auditorium requests:
 > POST auditorium

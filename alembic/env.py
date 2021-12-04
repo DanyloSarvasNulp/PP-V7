@@ -9,7 +9,7 @@ from alembic import context
 from DataBase.models import BaseModel
 
 import sys
-sys.path.append(r"C:\LABS\PP\PP-V7")
+sys.path.append(r"C:\Users\ded\PycharmProjects\PP-V7")
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -32,7 +32,7 @@ target_metadata = BaseModel.metadata
 
 config.set_main_option(
     "sqlalchemy.url",
-    "mysql+pymysql://root:password@127.0.0.1/swagger_booking"
+    "mysql+pymysql://root:password@127.0.0.1/pp"
 )
 
 

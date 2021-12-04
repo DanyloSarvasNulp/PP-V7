@@ -7,8 +7,8 @@ from DataBase.db_utils import (
     create_entry,
     get_entries,
     get_entry_by_id,
-    update_entry_by_id,
-    delete_entry_by_id,
+    update_entity,
+    delete_entity,
 )
 # TODO: solve problem
 
@@ -32,9 +32,9 @@ def get_auditorium_by_id(id):
 @app.route("/auditorium/<int:id>", methods=["PUT"])  # update auditorium by id
 def update_auditorium_by_id(id):
     auditorium_data = AuditoriumSchema().load(request.get_json())
-    return update_entry_by_id(Auditorium, AuditoriumSchema, id, **auditorium_data)
+    return update_entity(Auditorium, AuditoriumSchema, id, **auditorium_data)
 
 
 @app.route("/auditorium/<int:id>", methods=["DELETE"])  # delete auditorium by id
 def delete_auditorium_by_id(id):
-    return delete_entry_by_id(Auditorium, AuditoriumSchema, id)
+    return delete_entity(Auditorium, AuditoriumSchema, id)

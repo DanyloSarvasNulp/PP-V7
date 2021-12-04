@@ -14,7 +14,7 @@ from DataBase.db_utils import (
     create_entry,
     get_entries,
     get_entry_by_id,
-    delete_entry_by_id,
+    delete_entity,
     check_time
 )
 
@@ -118,7 +118,7 @@ def delete_access_by_id(access_id):
     print(cur_user)
 
     if int(cur_user.id) == int(temp.user_id):
-        return delete_entry_by_id(Access, AccessSchema, int(access_id))
+        return delete_entity(Access, AccessSchema, int(access_id))
     else:
         raise InvalidUsage("Invalid user Id", status_code=404)
 

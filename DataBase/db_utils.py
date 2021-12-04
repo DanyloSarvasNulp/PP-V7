@@ -1,5 +1,5 @@
 from models import Session
-from flask import jsonify
+from flask import jsonify, request
 from functools import wraps
 from app import app
 import sqlalchemy
@@ -109,33 +109,23 @@ def get_entry_by_username(model_class, model_schema, username):  # GET _user_ by
 
 @db_lifecycle
 @session_lifecycle
-def update_entry_by_id(model_class, model_schema, id, **kwargs):  # PUT entity by id
-    entry = session.query(model_class).filter_by(id=id).first()
-    if entry is None:
+def update_entity(model_schema, entity):  # PUT entity
+    data = model_schema().load(request.get_json())
+
+    if entity is None:
         raise InvalidUsage("Object not found", status_code=404)
-    for key, value in kwargs.items():
-        setattr(entry, key, value)
-    return jsonify(model_schema().dump(entry))
+    for key, value in data.items():
+        setattr(entity, key, value)
+    return jsonify(model_schema().dump(entity))
 
 
 @db_lifecycle
 @session_lifecycle
-def delete_entry_by_id(model_class, model_schema, id):  # DELETE entity by id
-    entry = session.query(model_class).filter_by(id=id).first()
-    if entry is None:
+def delete_entity(model_schema, entity):  # DELETE entity
+    if entity is None:
         raise InvalidUsage("Object not found", status_code=404)
-    session.delete(entry)
-    return jsonify(model_schema().dump(entry))
-
-
-@db_lifecycle
-@session_lifecycle
-def delete_entry_by_username(model_class, model_schema, username):  # DELETE user by username
-    entry = session.query(model_class).filter_by(username=username).first()
-    if entry is None:
-        raise InvalidUsage("Object not found", status_code=404)
-    session.delete(entry)
-    return jsonify(model_schema().dump(entry))
+    session.delete(entity)
+    return jsonify(model_schema().dump(entity))
 
 
 @db_lifecycle
@@ -158,7 +148,6 @@ def delete_entry_by_ids(model_class, model_schema, user_id, auditorium_id):  # D
 
 @db_lifecycle
 def check_time(model_class, model_schema, id, main_start, main_end):
-
     entries = session.query(model_class).all()
     for entry in entries:
         if entry.auditorium_id != id:
@@ -170,7 +159,7 @@ def check_time(model_class, model_schema, id, main_start, main_end):
         # end = entry.json.get('end', None)
         # end = entry.strptime(end, '%Y-%m-%d %H:%M:%S')
 
-        if start < main_start and (end > main_start and end < main_end ):
+        if start < main_start and (end > main_start and end < main_end):
             raise InvalidUsage("Time already reserved (1)", status_code=404)
 
         if start > main_start and end < main_end:
