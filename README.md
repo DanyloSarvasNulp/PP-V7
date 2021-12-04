@@ -107,3 +107,9 @@ Access requests:
 > DELETE access by ids
 > 
 >> curl -X DELETE http://localhost:5000/access/2,2
+
+lab-9
+
+Testing:
+
+> coverage run --source tests_unittest -m unittest discover && coverage report
