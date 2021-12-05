@@ -4,15 +4,16 @@ from tests_unittest.app_test import *
 class TestUser(MyTest):
 
     def setUp(self):
-        self.user_username = "default"
-        self.user_password = "somepassword"
-        self.user_auth = self.user_username, self.user_password
-        self.user_firstname = "Example"
+        self.auditorium_num = "10"
+        self.max_people_count = "48"
 
-        self.user_data = {"username": self.user_username, "password": self.user_password, }
+        self.data = {"auditorium_num": self.auditorium_num, "max_people_count": self.max_people_count, }
         self.header = {"Content-Type": "application/json", }
 
-    def test1_post_user(self):
-        resp = self.client.post("http://localhost:5000/user", headers=self.header, data=json.dumps(self.user_data))
+    def test1_post_auditorium(self):
+        resp = self.client.post("http://localhost:5000/auditorium", headers=self.header, data=json.dumps(self.data))
         self.assertEqual(200, resp.status_code)
-        self.assertGreaterEqual(resp. json().items(), dict(username="default").items())
+
+    def test2_get_auditoriums(self):
+        resp = self.client.get("http://localhost:5000/auditorium")
+        self.assertEqual(200, resp.status_code)
