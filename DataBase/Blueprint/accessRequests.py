@@ -76,7 +76,10 @@ def delete_access_by_id(access_id):
         raise InvalidUsage("Invalid access Id", status_code=404)
 
     if int(cur_user.id) == int(temp.user_id):
-        return delete_entity(Access, AccessSchema, int(access_id))
+        entry = session.query(Access).filter_by(id=int(access_id)).first()
+        if entry is None:
+            raise InvalidUsage("Object not found", status_code=404)
+        return delete_entity(AccessSchema, entry)
     else:
         raise InvalidUsage("Invalid user Id", status_code=404)
 

@@ -8,8 +8,8 @@ class MyTest(TestCase):
     def create_app(self):
         return app
 
-    def setUp(self):
-        db.create_all()
-
-    def tearDown(self):
-        db.session.remove()
+    # def setUp(self):
+    #     db.create_all()
+    #
+    # def tearDown(self):
+    #     db.session.remove()

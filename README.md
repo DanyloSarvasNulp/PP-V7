@@ -50,7 +50,8 @@ User requests:
 >
 > DELETE user
 >
->> curl -X DELETE http://localhost:5000/user
+>> curl -X DELETE -u Pax:abcdefg http://localhost:5000/user
+
 
 Auditorium requests:
 > POST auditorium
@@ -88,9 +89,9 @@ Access requests:
 > 
 >> curl -X GET http://localhost:5000/access/2,2
 > 
-> DELETE access by ids
+> DELETE access
 > 
->> curl -X DELETE http://localhost:5000/access/2,2
+>> curl -X DELETE -u Pax2:abcdefg http://localhost:5000/access/1
 
 lab-9
 
