@@ -1,5 +1,4 @@
-from DataBase.debug_enable import app
-from DataBase.models import Session
+from DataBase.config_app import app, db
 from flask import jsonify, request
 from functools import wraps
 
@@ -7,7 +6,7 @@ import sqlalchemy
 from datetime import datetime, timedelta
 import json
 
-session = Session()
+session = db.session
 
 
 class InvalidUsage(Exception):

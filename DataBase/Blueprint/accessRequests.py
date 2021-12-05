@@ -5,20 +5,11 @@ from flask import request, jsonify
 from datetime import datetime, timedelta
 from flask_httpauth import HTTPBasicAuth
 import bcrypt
-from DataBase.models import Session
 
-session = Session()
-
-from DataBase.db_utils import (
-    InvalidUsage,
-    create_entry,
-    get_entries,
-    get_entry_by_id,
-    delete_entity,
-    check_time
-)
+from DataBase.db_utils import *
 
 auth = HTTPBasicAuth()
+
 
 class InvalidUsage(Exception):
     status_code = 400
@@ -36,6 +27,7 @@ class InvalidUsage(Exception):
         rv['status_code'] = self.status_code
         return rv
 
+
 @auth.verify_password
 def verify_password(username, password):
     user = session.query(User).filter_by(username=username).first()
@@ -48,11 +40,13 @@ def verify_password(username, password):
     if user:
         return user
 
+
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error):
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
     return response
+
 
 @app.route("/access", methods=["POST"])  # create new access
 @auth.login_required
@@ -89,6 +83,7 @@ def get_access():
     print(cur_user)
     return jsonify(AccessSchema(many=True).dump(session.query(Access).filter_by(user_id=cur_user.id).all()))
 
+
 # curl -X GET -u Pax1:abcdefg http://localhost:5000/access
 
 @app.route("/access/<int:access_id>", methods=["GET"])  # get access by id
@@ -96,7 +91,7 @@ def get_access():
 def get_access_by_id(access_id):
     cur_user = auth.current_user()
     print(cur_user)
-    temp = session.query(Access).filter_by(id = access_id).first()
+    temp = session.query(Access).filter_by(id=access_id).first()
     print(temp.user_id, temp.auditorium_id)
     if int(cur_user.id) == int(temp.user_id):
         print("done")

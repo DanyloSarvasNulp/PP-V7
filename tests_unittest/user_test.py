@@ -4,6 +4,7 @@ from unittest.mock import patch, Mock
 import urllib
 from urllib import request
 
+import flask_testing
 import requests
 from flask import json
 
@@ -15,19 +16,19 @@ import bcrypt
 
 from urllib3 import response
 
-from app import app
+from DataBase.Blueprint.userRequests import verify_password
+from DataBase.config_app import app
+from tests_unittest import app_test
+# from tests_unittest.app_test import MyTest
+from tests_unittest.app_test import MyTest
 
 
-class TestUser(TestCase):
+class TestUser(MyTest):
 
     def setUp(self):
-        app.testing = True
-
-        self.user_id = "1"
         self.user_username = "default"
         self.user_password = "somepassword"
         self.user_auth = "default:somepassword"
-        self.user_password_hashed = bcrypt.hashpw(self.user_password.encode("utf-8"), bcrypt.gensalt())
 
         self.user_data = {"username": "default", "password": "somepassword", }
         self.header = {"Content-Type": "application/json", }
@@ -44,28 +45,28 @@ class TestUser(TestCase):
 
         self.assertGreaterEqual(resp.json().items(), dict(username="default").items())
 
-    # def test2_failed_post_user(self):
-    #     resp = requests.post("http://localhost:5000/user", headers=self.header, data=json.dumps(self.user_data))
-    #     self.assertEquals(400, resp.status_code)
+    def test2_failed_post_user(self):
+        app.post('/user', data=dict(
+            username="username",
+            password="password"
+        ), follow_redirects=True)
 
-    # def test3_authenticate_user(self):
-    #     resp = verify_password(self.user_email, self.user_password)
-    #     self.assertIsInstance(resp, user)
-    #
-    # def test4_failed_authenticate_user(self):
-    #     resp = verify_password("wrong_email", "wrong_password")
-    #     self.assertIsNot(resp, user)
-    #
-    # def test5_get_user(self):
-    #     resp = requests.get("http://localhost:5000/user/" + self.user_id, headers=self.header, auth=(self.user_email, self.user_password))
+        resp = requests.post("http://localhost:5000/user", headers=self.header, data=json.dumps(self.user_data))
+        self.assertEquals(400, resp.status_code)
+
+    # def test3_get_user(self):
+    #     app.get(a)
+    #     resp = requests.get("http://localhost:5000/user/" + self.user_id, headers=self.header,
+    #                         auth=(self.user_email, self.user_password))
     #     self.assertEquals(resp.status_code, 200)
     #     # self.assertEquals(resp.json, )
+
     #
     # def test6_failed_get_user(self):
     #     resp = requests.get("http://localhost:5000/user/" + self.user_id, headers=self.header, auth=(self.user_email, "wrong_password"))
     #     self.assertEquals(resp.status_code, 401)
 
-    def test20_delete_user(self):
+    def test3_delete_user(self):
         resp = requests.delete("http://localhost:5000/user", headers=self.header,
                                auth=(self.user_username, self.user_password))
         self.assertEqual(resp.status_code, 200)

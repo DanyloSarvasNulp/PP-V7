@@ -1,4 +1,4 @@
-from DataBase.models import Session, User, Access, Auditorium
+from DataBase.models import User, Access, Auditorium
 
 
 user1 = User(username="pusyBOY", email="customemail@gmail.com", phone="0935215742")

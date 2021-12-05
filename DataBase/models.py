@@ -1,20 +1,19 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import Column, Integer, ForeignKey, VARCHAR, DateTime, Boolean
 
-engine = create_engine('mysql+pymysql://root:password@127.0.0.1/pp')
-engine.connect()
+#
+# engine = create_engine('mysql+pymysql://root:password@127.0.0.1/pp')
+# engine.connect()
+#
+# SessionFactory = sessionmaker(bind=engine)
+#
+# Session = scoped_session(SessionFactory)
+#
+# BaseModel = declarative_base()
+# BaseModel.query = Session.query_property()
+from DataBase.config_app import db
 
-SessionFactory = sessionmaker(bind=engine)
 
-Session = scoped_session(SessionFactory)
-
-BaseModel = declarative_base()
-BaseModel.query = Session.query_property()
-
-
-class User(BaseModel):
+class User(db.Model):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
@@ -32,7 +31,8 @@ class User(BaseModel):
                f"Email      : {self.email}\n" \
                f"Phone      : {self.phone}\n"
 
-    def __init__(self, username, first_name=None, last_name=None, email=None, password=None, phone=None, user_status=False):
+    def __init__(self, username, first_name=None, last_name=None, email=None, password=None, phone=None,
+                 user_status=False):
         self.username = username
         self.first_name = first_name
         self.last_name = last_name
@@ -42,7 +42,7 @@ class User(BaseModel):
         self.user_status = user_status
 
 
-class Auditorium(BaseModel):
+class Auditorium(db.Model):
     __tablename__ = "auditorium"
 
     id = Column(Integer, primary_key=True)
@@ -56,7 +56,7 @@ class Auditorium(BaseModel):
         self.is_free = is_free
 
 
-class Access(BaseModel):
+class Access(db.Model):
     __tablename__ = "access"
 
     id = Column(Integer, primary_key=True)
@@ -70,6 +70,3 @@ class Access(BaseModel):
         self.user_id = user_id
         self.start = start
         self.end = end
-
-
-BaseModel.metadata.create_all(engine)

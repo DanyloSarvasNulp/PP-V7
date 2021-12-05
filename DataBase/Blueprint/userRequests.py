@@ -3,9 +3,8 @@ from DataBase.models import User, Access
 from flask import request, jsonify
 from flask_httpauth import HTTPBasicAuth
 import bcrypt
-from DataBase.models import Session
 
-session = Session()
+
 
 from DataBase.db_utils import *
 
