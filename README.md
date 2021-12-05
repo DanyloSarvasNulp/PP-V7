@@ -40,16 +40,6 @@ User requests:
 >
 >> curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"Pax\", \"password\": \"abcdefg\"}" http://localhost:5000/user
 >
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"username\": \"theMax0n\", \"first_name\": \"Max\", \"password\": \"cdasft\"}" http://localhost:5000/user
->
-> GET all users
->
->> curl -X GET http://localhost:5000/user
->
-> GET user by username
->
->> curl -X GET http://localhost:5000/user/theMax0n
->
 > GET user
 >
 >> curl -X GET -u Pax:abcdefg http://localhost:5000/user
@@ -61,33 +51,27 @@ User requests:
 > DELETE user
 >
 >> curl -X DELETE http://localhost:5000/user
-> 
-> DELETE user by username
-> 
->> curl -X DELETE -u Pax:abcdefg http://localhost:5000/user
 
 Auditorium requests:
 > POST auditorium
->
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"max_people_count\": \"48\"}" http://localhost:5000/auditorium
->
+> 
 >> curl -X POST -H "Content-Type:application/json" --data-binary "{\"max_people_count\": \"48\", \"auditorium_num\": \"10\"}" http://localhost:5000/auditorium
 >
 > GET all auditoriums
 > 
 >> curl -X GET http://localhost:5000/auditorium
 >
-> GET auditorium by id
+> GET auditorium by num
 > 
->> curl -X GET http://localhost:5000/auditorium/2
+>> curl -X GET http://localhost:5000/auditorium/10
 >
 > PUT auditorium
 >
->> curl -X PUT -H "Content-Type:application/json" --data-binary "{\"max_people_count\": \"100\", \"auditorium_num\": \"3\"}" http://localhost:5000/auditorium/1
+>> curl -X PUT -H "Content-Type:application/json" --data-binary "{\"max_people_count\": \"100\", \"auditorium_num\": \"10\"}" http://localhost:5000/auditorium/1
 >
-> DELETE auditorium by id
+> DELETE auditorium by num
 >
->> curl -X DELETE http://localhost:5000/auditorium/1
+>> curl -X DELETE http://localhost:5000/auditorium/10
 
 Access requests:
 > POST access
