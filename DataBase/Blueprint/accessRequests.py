@@ -37,12 +37,15 @@ def create_access():
 
         auditorium_num = int(request.json.get('auditorium_num', None))
         auditorium = session.query(Auditorium).filter_by(auditorium_num=auditorium_num).first()
-        access_data = dict(auditorium_id=auditorium.id,
-                           user_id=cur_user.id,
+        access_data = dict(auditorium_id=str(auditorium.id),
+                           user_id=str(cur_user.id),
                            start=request.json.get('start', None), end=request.json.get('end', None))
 
         check_time(Access, auditorium.id, start, end)
-        return create_entry(Access, AccessSchema, **access_data)
+        entry = Access(**access_data)
+        session.add(entry)
+        session.commit()
+        return jsonify(AccessSchema().dump(dict(auditorium_id=auditorium.id, user_id=cur_user.id)))
     else:
         raise InvalidUsage("Invalid user Id", status_code=404)
 

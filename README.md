@@ -91,7 +91,7 @@ Access requests:
 > 
 > DELETE access
 > 
->> curl -X DELETE -u Pax2:abcdefg "Content-Type:application/json" --data-binary "{\"auditorium_num\": \"1\"}" http://localhost:5000/access
+>> curl -X DELETE -u Pax:abcdefg -H "Content-Type:application/json" --data-binary "{\"auditorium_num\": \"10\"}" http://localhost:5000/access
 
 lab-9
 

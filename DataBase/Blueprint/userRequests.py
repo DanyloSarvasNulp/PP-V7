@@ -20,7 +20,7 @@ def verify_password(username, password):
 @app.route("/user", methods=["POST"])  # create new user
 def create_user():
     user_data = UserSchema().load(request.get_json())
-
+    print(user_data)
     pwd = request.json.get('password', None)
     hashed_pwd = bcrypt.hashpw(pwd.encode("utf-8"), bcrypt.gensalt())
     user_data.update({"password": hashed_pwd})

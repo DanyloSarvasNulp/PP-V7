@@ -43,7 +43,8 @@ def db_lifecycle(func):
             if isinstance(e, ValueError):
                 return jsonify({'message': e.args[0], 'type': 'ValueError'}), 400
             elif isinstance(e, AttributeError):
-                return jsonify({'message': e.args[0], 'type': 'AttributeError'}), 400
+                raise e
+                # return jsonify({'message': e.args[0], 'type': 'AttributeError'}), 400
             elif isinstance(e, KeyError):
                 return jsonify({'message': e.args[0], 'type': 'KeyError'}), 400
             elif isinstance(e, TypeError):
