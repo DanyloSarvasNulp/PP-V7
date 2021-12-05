@@ -76,7 +76,7 @@ Auditorium requests:
 Access requests:
 > POST access
 > 
->> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"1\", \"user_id\": \"1\", \"start\": \"2021-01-01 1:00:00\", \"end\": \"2021-01-01 3:00:00\"}" http://localhost:5000/access
+>> curl -X POST -u Pax:abcdefg -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"1\", \"user_id\": \"1\", \"start\": \"2021-01-01 1:00:00\", \"end\": \"2021-01-01 3:00:00\"}" http://localhost:5000/access
 > 
 >> curl -X POST -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"1\", \"user_id\": \"1\", \"start\": \"2021-01-01 2:00:00\", \"end\": \"2021-01-01 4:00:00\"}" http://localhost:5000/access
 > 
