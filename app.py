@@ -1,10 +1,6 @@
-from flask import Flask
-from flask_bcrypt import Bcrypt
-
-app = Flask(__name__)
-bcrypt = Bcrypt(app)
+from DataBase.debug_enable import app
+import DataBase.Blueprint.userRequests, DataBase.Blueprint.auditoriumRequests, DataBase.Blueprint.accessRequests
 
 
-@app.route("/api/v1/hello-world-7")
-def index():
-    return "Hello World 7!"
+if __name__ == "__main__":
+    app.run(debug=True)

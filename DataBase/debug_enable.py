@@ -1,6 +1,5 @@
-from app import app
-import Blueprint.userRequests, Blueprint.auditoriumRequests, Blueprint.accessRequests
+from flask import Flask
+from flask_bcrypt import Bcrypt
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
+app = Flask(__name__)
+bcrypt = Bcrypt(app)

@@ -112,4 +112,13 @@ lab-9
 
 Testing:
 
+> python -m unittest discover -s tests_unittest -p "*_test.py"
+> 
+> coverage run -m --source=DataBase,tests_unittest unittest discover -s tests_unittest -p "*_test.py" && coverage report
+> 
+> 
+> coverage run -m app --source=tests_unittest,DataBase,DataBase/Blueprint unittest discover -s tests_uest -p "*_test.py" && coverage report
+> 
+> coverage report -m
+> 
 > coverage run --source tests_unittest -m unittest discover && coverage report

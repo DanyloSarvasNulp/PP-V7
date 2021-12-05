@@ -1,3 +1,4 @@
+import unittest
 from unittest import TestCase
 from unittest.mock import patch, Mock
 import urllib
@@ -11,12 +12,17 @@ from flask import json
 # from database.models import user
 # from database.authorization import *
 import bcrypt
+
 from urllib3 import response
+
+from app import app
 
 
 class TestUser(TestCase):
 
     def setUp(self):
+        app.testing = True
+
         self.user_id = "1"
         self.user_username = "default"
         self.user_password = "somepassword"
@@ -27,6 +33,11 @@ class TestUser(TestCase):
         self.header = {"Content-Type": "application/json", }
 
     def test1_post_user(self):
+        app.post('/user', data=dict(
+            username="username",
+            password="password"
+        ), follow_redirects=True)
+
         resp = requests.post("http://localhost:5000/user", headers=self.header, data=json.dumps(self.user_data))
 
         self.assertEqual(200, resp.status_code)

@@ -1,7 +1,8 @@
-from models import Session
+from DataBase.debug_enable import app
+from DataBase.models import Session
 from flask import jsonify, request
 from functools import wraps
-from app import app
+
 import sqlalchemy
 from datetime import datetime, timedelta
 import json
