@@ -28,16 +28,16 @@ def get_entry_by_username(func):
     return wrapper
 
 
-@app.route("/auditorium/<int:num>", methods=["GET"])  # get auditorium \\
+@app.route("/auditorium/<int:num>", methods=["GET"])  # get auditorium
 @get_entry_by_username
 def get_auditorium_by_id(entity):
     return jsonify(AuditoriumSchema().dump(entity))
 
 
-@app.route("/auditorium/<int:id>", methods=["PUT"])  # update auditorium by id
-def update_auditorium_by_id(id):
-    auditorium_data = AuditoriumSchema().load(request.get_json())
-    return update_entity(Auditorium, AuditoriumSchema, id, **auditorium_data)
+@app.route("/auditorium/<int:num>", methods=["PUT"])  # update auditorium
+@get_entry_by_username
+def update_auditorium_by_id(entity):
+    return update_entity(AuditoriumSchema, entity)
 
 
 @app.route("/auditorium/<int:num>", methods=["DELETE"])  # delete auditorium
