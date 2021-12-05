@@ -1,7 +1,5 @@
-from app import app
 from DataBase.schemas import AuditoriumSchema
 from DataBase.models import Auditorium
-from flask import request
 
 from DataBase.db_utils import *
 
@@ -30,17 +28,17 @@ def get_entry_by_username(func):
 
 @app.route("/auditorium/<int:num>", methods=["GET"])  # get auditorium
 @get_entry_by_username
-def get_auditorium_by_id(entity):
+def get_auditorium_by_num(entity):
     return jsonify(AuditoriumSchema().dump(entity))
 
 
 @app.route("/auditorium/<int:num>", methods=["PUT"])  # update auditorium
 @get_entry_by_username
-def update_auditorium_by_id(entity):
+def update_auditorium_by_num(entity):
     return update_entity(AuditoriumSchema, entity)
 
 
 @app.route("/auditorium/<int:num>", methods=["DELETE"])  # delete auditorium
 @get_entry_by_username
-def delete_auditorium_by_id(entity):
+def delete_auditorium_by_num(entity):
     return delete_entity(AuditoriumSchema, entity)

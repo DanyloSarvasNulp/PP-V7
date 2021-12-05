@@ -1,31 +1,11 @@
-from DataBase.schemas import UserSchema, AccessSchema
-from DataBase.models import User, Access
-from flask import request, jsonify
+from DataBase.schemas import UserSchema
+from DataBase.models import User
 from flask_httpauth import HTTPBasicAuth
 import bcrypt
 
 from DataBase.db_utils import *
 
 auth = HTTPBasicAuth()
-users = {}
-users["username"] = "password"
-
-
-class InvalidUsage(Exception):
-    status_code = 400
-
-    def __init__(self, message, status_code=None, payload=None):  # pragma: no cover
-        Exception.__init__(self)
-        self.message = message
-        if status_code is not None:
-            self.status_code = status_code
-        self.payload = payload
-
-    def to_dict(self):  # pragma: no cover
-        rv = dict(self.payload or ())
-        rv['message'] = self.message
-        rv['status_code'] = self.status_code
-        return rv
 
 
 @auth.verify_password
@@ -35,13 +15,6 @@ def verify_password(username, password):
     if user and bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
         return user
     return False
-
-
-@app.errorhandler(InvalidUsage)
-def handle_invalid_usage(error):  # pragma: no cover
-    response = jsonify(error.to_dict())
-    response.status_code = error.status_code
-    return response
 
 
 @app.route("/user", methods=["POST"])  # create new user
