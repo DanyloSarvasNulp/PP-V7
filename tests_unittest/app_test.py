@@ -7,3 +7,4 @@ class MyTest(TestCase):
     def create_app(self):
         return app
 
+

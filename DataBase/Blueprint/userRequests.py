@@ -4,8 +4,6 @@ from flask import request, jsonify
 from flask_httpauth import HTTPBasicAuth
 import bcrypt
 
-
-
 from DataBase.db_utils import *
 
 auth = HTTPBasicAuth()
@@ -16,14 +14,14 @@ users["username"] = "password"
 class InvalidUsage(Exception):
     status_code = 400
 
-    def __init__(self, message, status_code=None, payload=None):
+    def __init__(self, message, status_code=None, payload=None):  # pragma: no cover
         Exception.__init__(self)
         self.message = message
         if status_code is not None:
             self.status_code = status_code
         self.payload = payload
 
-    def to_dict(self):
+    def to_dict(self):  # pragma: no cover
         rv = dict(self.payload or ())
         rv['message'] = self.message
         rv['status_code'] = self.status_code
@@ -40,7 +38,7 @@ def verify_password(username, password):
 
 
 @app.errorhandler(InvalidUsage)
-def handle_invalid_usage(error):
+def handle_invalid_usage(error):  # pragma: no cover
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
     return response
@@ -62,7 +60,7 @@ def get_entry_by_username(func):
     def wrapper():
         entry = session.query(User).filter_by(username=auth.current_user().username).first()
         if entry is None:
-            raise InvalidUsage("Object not found", status_code=404)
+            raise InvalidUsage("Object not found", status_code=404)  # pragma: no cover
         return func(entry)
 
     return wrapper

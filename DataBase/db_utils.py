@@ -1,3 +1,5 @@
+import marshmallow
+
 from DataBase.config_app import app, db
 from flask import jsonify, request
 from functools import wraps
@@ -46,6 +48,12 @@ def db_lifecycle(func):
                 return jsonify({'message': e.args[0], 'type': 'KeyError'}), 400
             elif isinstance(e, TypeError):
                 return jsonify({'message': e.args[0], 'type': 'TypeError'}), 400
+            elif isinstance(e, marshmallow.exceptions.ValidationError):
+                if str(e.args[0]).find("Unknown field") != -1:
+                    raise InvalidUsage("Unknown field", status_code=400)
+                elif str(e.args[0]).find("Not a valid") != -1:
+                    raise InvalidUsage("Wrong type", status_code=400)
+                raise e
             elif isinstance(e, sqlalchemy.exc.IntegrityError):
                 if str(e.args[0]).find("Duplicate entry") != -1:
                     raise InvalidUsage("Duplicate entry", status_code=400)
@@ -55,10 +63,11 @@ def db_lifecycle(func):
                     raise InvalidUsage("Cannot add or update this object, incorrect data", status_code=400)
                 else:
                     raise InvalidUsage("Incorrect data", status_code=400)
-            # elif isinstance(e, sqlalchemy.exc.IntegrityError):
-            #     return jsonify({'message': "duplicate unique value", 'type': 'IntegrityError'}), 400
+                # return str(e.args[0])
+                # raise e
             else:
                 raise e
+                # raise InvalidUsage("InternalServerError", status_code=404)
 
     return wrapper
 
