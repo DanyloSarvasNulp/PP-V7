@@ -1,5 +1,5 @@
 from DataBase.schemas import AccessSchema
-from DataBase.models import Access, User
+from DataBase.models import Access, User, Auditorium
 from flask_httpauth import HTTPBasicAuth
 import bcrypt
 
@@ -23,9 +23,8 @@ def verify_password(username, password):
 @auth.login_required
 def create_access():
     cur_user = auth.current_user()
-    access_data = AccessSchema().load(request.get_json())
-    user_id = request.json.get('user_id', None)
-    if int(cur_user.id) == int(user_id):
+    username = request.json.get('username', None)
+    if cur_user.username == username:
         start = request.json.get('start', None)
         start = datetime.strptime(start, '%Y-%m-%d %H:%M:%S')
         end = request.json.get('end', None)
@@ -36,8 +35,13 @@ def create_access():
         if time > timedelta(hours=5):
             raise InvalidUsage("Invalid access time (too long)", status_code=400)
 
-        auditorium_id = int(request.json.get('auditorium_id', None))
-        check_time(Access, AccessSchema, auditorium_id, start, end)
+        auditorium_num = int(request.json.get('auditorium_num', None))
+        auditorium = session.query(Auditorium).filter_by(auditorium_num=auditorium_num).first()
+        access_data = dict(auditorium_id=auditorium.id,
+                           user_id=cur_user.id,
+                           start=request.json.get('start', None), end=request.json.get('end', None))
+
+        check_time(Access, auditorium.id, start, end)
         return create_entry(Access, AccessSchema, **access_data)
     else:
         raise InvalidUsage("Invalid user Id", status_code=404)
@@ -67,18 +71,17 @@ def get_access_by_id(access_id):
 
 # curl -X GET -u Pax2:abcdefg http://localhost:5000/access/1
 
-@app.route("/access/<int:access_id>", methods=["DELETE"])  # delete access by id
+@app.route("/access", methods=["DELETE"])  # delete access by id
 @auth.login_required
-def delete_access_by_id(access_id):
+def delete_access_by_id():
     cur_user = auth.current_user()
-    temp = session.query(Access).filter_by(id=int(access_id)).first()
-    if temp is None:
+    auditorium_num = int(request.json.get('auditorium_num', None))
+    auditorium = session.query(Auditorium).filter_by(auditorium_num=int(auditorium_num)).first()
+    entry = session.query(Access).filter_by(auditorium_id=auditorium.id).first()
+    if entry is None:
         raise InvalidUsage("Invalid access Id", status_code=404)
 
-    if int(cur_user.id) == int(temp.user_id):
-        entry = session.query(Access).filter_by(id=int(access_id)).first()
-        if entry is None:
-            raise InvalidUsage("Object not found", status_code=404)
+    if int(cur_user.id) == int(entry.user_id):
         return delete_entity(AccessSchema, entry)
     else:
         raise InvalidUsage("Invalid user Id", status_code=404)
