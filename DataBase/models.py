@@ -25,12 +25,6 @@ class User(db.Model):
     phone = Column(VARCHAR(15))
     user_status = Column(Boolean)
 
-    def __str__(self):
-        return f"User ID    : {self.id}\n" \
-               f"Username      : {self.username}\n" \
-               f"Email      : {self.email}\n" \
-               f"Phone      : {self.phone}\n"
-
     def __init__(self, username, first_name=None, last_name=None, email=None, password=None, phone=None,
                  user_status=False):
         self.username = username
