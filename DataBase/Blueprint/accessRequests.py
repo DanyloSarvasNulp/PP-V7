@@ -59,19 +59,6 @@ def get_access():
     return jsonify(AccessSchema(many=True).dump(session.query(Access).filter_by(user_id=cur_user.id).all()))
 
 
-# curl -X GET -u Pax1:abcdefg http://localhost:5000/access
-
-@app.route("/access/<int:access_id>", methods=["GET"])  # get access by id
-@auth.login_required
-def get_access_by_id(access_id):
-    cur_user = auth.current_user()
-    temp = session.query(Access).filter_by(id=access_id).first()
-    if int(cur_user.id) == int(temp.user_id):
-        return get_entry_by_id(Access, AccessSchema, int(access_id))
-    else:
-        raise InvalidUsage("Invalid user Id", status_code=404)
-
-
 # curl -X GET -u Pax2:abcdefg http://localhost:5000/access/1
 
 @app.route("/access", methods=["DELETE"])  # delete access by id

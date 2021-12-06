@@ -34,7 +34,14 @@ class TestUser(MyTest):
                                 auth=self.user_auth)
         self.assertEqual(200, resp.status_code)
 
-    def test20_delete_access(self):
+    def test20_get_accesses(self):
+        resp = self.client.get("http://localhost:5000/access",
+                               auth=self.user_auth)
+        self.assertEqual(200, resp.status_code)
+
+
+
+    def test50_delete_access(self):
         resp = self.client.delete("http://localhost:5000/access", headers=self.header,
                                   data=json.dumps({"auditorium_num": self.auditorium_num}),
                                   auth=self.user_auth)
