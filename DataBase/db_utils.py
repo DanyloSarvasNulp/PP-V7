@@ -102,28 +102,12 @@ def get_entries(model_class, model_schema):  # GET all entries
 
 
 @db_lifecycle
-def get_entry_by_id(model_class, model_schema, id):  # GET entry by id
-    entry = session.query(model_class).filter_by(id=id).first()
-    if entry is None:
-        raise InvalidUsage("Object not found", status_code=404)
-    return jsonify(model_schema().dump(entry))
-
-
-@db_lifecycle
-def get_entry_by_username(model_class, model_schema, username):  # GET _user_ by username
-    entry = session.query(model_class).filter_by(username=username).first()
-    if entry is None:
-        raise InvalidUsage("Object not found", status_code=404)
-    return jsonify(model_schema().dump(entry))
-
-
-@db_lifecycle
 @session_lifecycle
 def update_entity(model_schema, entity):  # PUT entity
     data = model_schema().load(request.get_json())
 
     if entity is None:
-        raise InvalidUsage("Object not found", status_code=404)
+        raise InvalidUsage("Object not found", status_code=404)  # pragma: no cover
     for key, value in data.items():
         setattr(entity, key, value)
     return jsonify(model_schema().dump(entity))
@@ -133,31 +117,13 @@ def update_entity(model_schema, entity):  # PUT entity
 @session_lifecycle
 def delete_entity(model_schema, entity):  # DELETE entity
     if entity is None:
-        raise InvalidUsage("Object not found", status_code=404)
+        raise InvalidUsage("Object not found", status_code=404)  # pragma: no cover
     session.delete(entity)
     return jsonify(model_schema().dump(entity))
 
 
 @db_lifecycle
-def get_entry_by_ids(model_class, model_schema, user_id, auditorium_id):  # GET access by user and auditorium ids
-    entry = session.query(model_class).filter_by(user_id=user_id, auditorium_id=auditorium_id).first()
-    if entry is None:
-        raise InvalidUsage("Object not found", status_code=404)
-    return jsonify(model_schema(many=True).dump(entry))
-
-
-@db_lifecycle
-@session_lifecycle
-def delete_entry_by_ids(model_class, model_schema, user_id, auditorium_id):  # DELETE access by user and auditorium ids
-    entry = session.query(model_class).filter_by(user_id=user_id, auditorium_id=auditorium_id).first()
-    if entry is None:
-        raise InvalidUsage("Object not found", status_code=404)
-    session.delete(entry)
-    return jsonify(model_schema().dump(entry))
-
-
-@db_lifecycle
-def check_time(model_class, auditorium_id, main_start, main_end):
+def check_time(model_class, auditorium_id, main_start, main_end):  # pragma: no cover
     entry = session.query(model_class).filter(auditorium_id=auditorium_id).first()
     start = entry.start
     end = entry.end
