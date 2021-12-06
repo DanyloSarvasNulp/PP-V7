@@ -12,9 +12,9 @@ auth = HTTPBasicAuth()
 def verify_password(username, password):
     user = session.query(User).filter_by(username=username).first()
     if not user:
-        return False
+        return False  # pragma: no cover
     if not bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
-        return False
+        return False  # pragma: no cover
     if user:
         return user
 
@@ -31,9 +31,9 @@ def create_access():
         end = datetime.strptime(end, '%Y-%m-%d %H:%M:%S')
         time = end - start
         if time < timedelta(hours=1):
-            raise InvalidUsage("Invalid access time (too short)", status_code=400)
+            raise InvalidUsage("Invalid access time (too short)", status_code=400)  # pragma: no cover
         if time > timedelta(hours=5):
-            raise InvalidUsage("Invalid access time (too long)", status_code=400)
+            raise InvalidUsage("Invalid access time (too long)", status_code=400)  # pragma: no cover
 
         auditorium_num = int(request.json.get('auditorium_num', None))
         auditorium = session.query(Auditorium).filter_by(auditorium_num=auditorium_num).first()
@@ -47,7 +47,7 @@ def create_access():
         session.commit()
         return jsonify(AccessSchema().dump(dict(auditorium_id=auditorium.id, user_id=cur_user.id)))
     else:
-        raise InvalidUsage("Invalid user Id", status_code=404)
+        raise InvalidUsage("Invalid user Id", status_code=404)  # pragma: no cover
 
 
 # curl -X POST -u Pax1:abcdefg -H "Content-Type:application/json" --data-binary "{\"auditorium_id\": \"1\", \"user_id\": \"1\", \"start\": \"2021-01-01 1:00:00\", \"end\": \"2021-01-01 3:00:00\"}" http://localhost:5000/access
@@ -69,11 +69,11 @@ def delete_access_by_id():
     auditorium = session.query(Auditorium).filter_by(auditorium_num=int(auditorium_num)).first()
     entry = session.query(Access).filter_by(auditorium_id=auditorium.id).first()
     if entry is None:
-        raise InvalidUsage("Invalid access Id", status_code=404)
+        raise InvalidUsage("Invalid access Id", status_code=404)  # pragma: no cover
 
     if int(cur_user.id) == int(entry.user_id):
         return delete_entity(AccessSchema, entry)
     else:
-        raise InvalidUsage("Invalid user Id", status_code=404)
+        raise InvalidUsage("Invalid user Id", status_code=404)  # pragma: no cover
 
 # curl -X DELETE -u Pax2:abcdefg http://localhost:5000/access/1
